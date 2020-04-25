@@ -60,24 +60,15 @@ public class NodeComputers {
         if(size == 0 ) {
             throw new RuntimeException("queue is empty");
         }
-        if(size == 10) {
-            size--;
-            bufferQueue = new Computer[size];
-            tail = 0;
-            queueComputers = bufferQueue;
+        size--;
+        bufferQueue = new Computer[size];
+        tail = bufferQueue.length - 1;
+        for(int i = 1; i <= queueComputers.length-1; i++) {
+            bufferQueue[i-1] = queueComputers[i];
+            System.out.println(bufferQueue[i-1].getId());
         }
-        else {
-            size--;
-            bufferQueue = new Computer[size];
-            tail = bufferQueue.length - 1;
+        queueComputers = bufferQueue;
 
-            for(int i = 1; i <= queueComputers.length-1; i++) {
-                bufferQueue[i-1] = queueComputers[i];
-                System.out.println(bufferQueue[i-1].getMemory());
-            }
-            queueComputers = bufferQueue;
-
-        }
     }
     public void showLength() {
         System.out.println(queueComputers.length);

@@ -18,6 +18,7 @@ public class Main {
         myNode.addElement(myComputer2);
         myNode.addElement(myComputer3);
         myNode.addElement(myComputer4);
+        myNode.removeElement();
 
 //        myNode.showLength();
 

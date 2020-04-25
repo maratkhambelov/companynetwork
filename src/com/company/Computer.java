@@ -30,5 +30,7 @@ public class Computer {
     public int getMemory() {
         return memory;
     }
-
+    public int getId() {
+        return this.id;
+    }
 }
