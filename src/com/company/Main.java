@@ -13,9 +13,12 @@ public class Main {
 
         NodeComputers myNode = new NodeComputers(1);
         myNode.addElement(myComputer);
+        myNode.removeElement();
+
         myNode.addElement(myComputer2);
         myNode.addElement(myComputer3);
         myNode.addElement(myComputer4);
+
 //        myNode.showLength();
 
     }
