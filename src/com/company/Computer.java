@@ -14,17 +14,14 @@ public class Computer {
     }
     public void setNext(int idx){
         this.next = idx;
-//        System.out.println("next: " + next);
     }
     public void setPrev(int idx){
         this.prev = idx;
-//        System.out.println("prev: " + prev);
-
     }
-    public int showPrev(){
+    public int getPrev(){
         return this.prev;
     }
-    public int showNext(){
+    public int getNext(){
         return this.next;
     }
     public int getMemory() {
