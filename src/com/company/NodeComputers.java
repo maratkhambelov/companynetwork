@@ -69,18 +69,6 @@ public class NodeComputers {
         }
         bufferQueue[tail] = queueComputers[0]; // первый элемент в очереди помещается в конец очереди
         queueComputers = bufferQueue;
-//        size--;
-
-
-//        bufferQueue = new Computer[size];
-//        for(int i = 1; i <= queueComputers.length-1; i++) {
-//            bufferQueue[i-1] = queueComputers[i];
-//        }
-//        queueComputers = bufferQueue;
-//        System.out.println("size: " + size);
-//        for(int i = 0; i <= queueComputers.length - 1; i++){
-//            System.out.println(queueComputers[i].getId());
-//        }
     }
     public void showElements(){
         for(int i = 0; i <= queueComputers.length-1; i++) {
