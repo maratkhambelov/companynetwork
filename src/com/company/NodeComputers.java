@@ -7,10 +7,8 @@ public class NodeComputers {
     private Computer[] bufferQueue;
     private int memory;
     private int size; // размер массива
-//    private int initialSize; // первоначальный размер массива
 
     private int tail; //последний элемент массива
-    private int head; //первый элемент массива
     private NodeComputers next; //следующий узел в списке
     private NodeComputers prev;//предыдущий узел в списке
     public NodeComputers(int id, int initialSize){
@@ -38,7 +36,6 @@ public class NodeComputers {
             size++;
             queueComputers = new Computer[size];
             queueComputers[0] = computer;
-            head = 0;
             tail = queueComputers.length - 1;
         }
         else{
@@ -67,7 +64,6 @@ public class NodeComputers {
             throw new RuntimeException("queue is empty");
         }
         size--;
-        head++;
         bufferQueue = new Computer[size];
         for(int i = 1; i <= queueComputers.length-1; i++) {
             bufferQueue[i-1] = queueComputers[i];
