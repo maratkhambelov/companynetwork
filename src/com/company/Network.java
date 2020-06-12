@@ -1,11 +1,13 @@
 package com.company;
 
 
+import java.io.*;
 
-public class Network {
+public class Network implements Serializable {
     private NodeComputers tail; //последний элемент списка
     private int size = 0; //количество элеметов
     private int memory;
+    private static final long serialVersionUID = 1L;
 
     public void addElement(int id, int initialSize){
         NodeComputers newNode = new NodeComputers(id, initialSize);
@@ -45,8 +47,9 @@ public class Network {
         }
         tail = newNode;
         size++;
-        System.out.println("ADD ELEMENT:");
-        System.out.println(tail.getId());
+//        System.out.println("ADD ELEMENT:");
+//        System.out.println(tail.getId());
+        setMemory(memory + node.getMemory());
 
     }
     public void removeElement(NodeComputers node){
@@ -54,14 +57,14 @@ public class Network {
         if(isFound(node)){
             node.getPrev().setNext(node.getNext());
             node.getNext().setPrev(node.getPrev());
+            setMemory(memory - node.getMemory());
             size--;
         }
         else{
             throw new RuntimeException("item was not found");
         }
-        System.out.println("REMOVE ELEMENT: ");
-
-        System.out.println(node.getId());
+//        System.out.println("REMOVE ELEMENT: ");
+//        System.out.println(node.getId());
     }
     public boolean isEmpty(){
         if(size == 0) {
@@ -93,10 +96,40 @@ public class Network {
     public int getMemory(){
         return this.memory;
     }
-    public void writeStructure(){
-
+    public void setMemory(int newValue){
+        this.memory = newValue;
     }
-    public void readStructure(){
+    private String getStringNodes(){
+        String allElements = " NodeComputers: {";
 
+        NodeComputers current = tail.getNext();
+        allElements = allElements + current.toString();
+
+        current = current.getNext();
+        while(current !=  tail.getNext()) {
+            allElements = allElements + current.toString();
+            current = current.getNext();
+        }
+        allElements = allElements + " }";
+        return allElements;
+    }
+    public void writeNetwork(String url) throws IOException {
+        FileOutputStream outputStream = new FileOutputStream(url);
+        ObjectOutputStream objectOutputStream = new ObjectOutputStream(outputStream);
+        objectOutputStream.writeObject(this);
+        objectOutputStream.close();
+    }
+    public void readNetwork(String url) throws IOException, ClassNotFoundException {
+        FileInputStream fileInputStream = new FileInputStream(url);
+        ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
+        Network thisNetwork = (Network) objectInputStream.readObject();
+        System.out.println(thisNetwork);
+    }
+    @Override
+    public String toString() {
+        return "Network: {" +
+                "memory:" + Integer.toString(memory) + "," +
+                getStringNodes() +
+                '}';
     }
 }

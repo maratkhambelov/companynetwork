@@ -1,7 +1,10 @@
 package com.company;
 
 
-public class NodeComputers {
+import java.io.Serializable;
+import java.util.Arrays;
+
+public class NodeComputers implements Serializable {
     private int id;
     private Computer[] queueComputers; //кольцевая очередь на основе массива
     private Computer[] bufferQueue;
@@ -52,6 +55,7 @@ public class NodeComputers {
 //                System.out.println(queueComputers[i].getId());
 //            }
         }
+        setMemory(memory + computer.getMemory());
     }
     public boolean isEmpty(){
         if(size == 0) {
@@ -77,5 +81,16 @@ public class NodeComputers {
     }
     public int getMemory() {
         return this.memory;
+    }
+    public void setMemory(int newValue){
+        this.memory = newValue;
+    }
+    @Override
+    public String toString() {
+        return " Node: {" +
+                "id:'" + Integer.toString(id)  + "'" +
+                "memory:" + Integer.toString(memory) + "," +
+                "queue: " + Arrays.toString(queueComputers) +
+                "},";
     }
 }
