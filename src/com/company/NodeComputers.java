@@ -49,10 +49,6 @@ public class NodeComputers implements Serializable {
             tail = bufferQueue.length-1;
             bufferQueue[tail] = computer;
             queueComputers = bufferQueue;
-//            System.out.println("size: " + size);
-//            for(int i = 0; i <= queueComputers.length - 1; i++){
-//                System.out.println(queueComputers[i].getId());
-//            }
         }
         setMemory(memory + computer.getMemory());
     }
@@ -89,9 +85,9 @@ public class NodeComputers implements Serializable {
         return " Node: {" +
                 "id:'" + Integer.toString(id)  + "'" +
                 "memory:" + Integer.toString(memory) + "," +
-                "prevElem: " + getPrev().getId() + "," +
-                "nextElem: " + getNext().getId() + "," +
+                "prevElemId: " + getPrev().getId() + "," +
+                "nextElemId: " + getNext().getId() + "," +
                 "queue: " + Arrays.toString(queueComputers) +
-                "},";
+                "}," + "\n" ;
     }
 }

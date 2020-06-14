@@ -27,8 +27,6 @@ public class Network implements Serializable {
         }
         tail = newNode;
         size++;
-//        System.out.println("ADD ELEMENT:");
-//        System.out.println(tail.getId());
         setMemory(memory + node.getMemory());
 
     }
@@ -43,8 +41,6 @@ public class Network implements Serializable {
         else{
             throw new RuntimeException("item was not found");
         }
-//        System.out.println("REMOVE ELEMENT: ");
-//        System.out.println(node.getId());
     }
     public boolean isEmpty(){
         if(size == 0) {
@@ -80,7 +76,7 @@ public class Network implements Serializable {
         this.memory = newValue;
     }
     private String getStringNodes(){
-        String allElements = " NodeComputers: {";
+        String allElements = " NodeComputers: {" + "\n" ;
 
         NodeComputers current = tail.getNext();
         allElements = allElements + current.toString();
@@ -93,16 +89,17 @@ public class Network implements Serializable {
         allElements = allElements + " }";
         return allElements;
     }
-    public void writeNetwork(String url) throws IOException {
-        FileOutputStream outputStream = new FileOutputStream(url);
+    public void writeNetwork(String path) throws IOException {
+        FileOutputStream outputStream = new FileOutputStream(path);
         ObjectOutputStream objectOutputStream = new ObjectOutputStream(outputStream);
         objectOutputStream.writeObject(this);
         objectOutputStream.close();
     }
-    public void readNetwork(String url) throws IOException, ClassNotFoundException {
-        FileInputStream fileInputStream = new FileInputStream(url);
+    public void readNetwork(String path) throws IOException, ClassNotFoundException {
+        FileInputStream fileInputStream = new FileInputStream(path);
         ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
         Network thisNetwork = (Network) objectInputStream.readObject();
+        objectInputStream.close();
         System.out.println(thisNetwork);
     }
     @Override
@@ -113,26 +110,3 @@ public class Network implements Serializable {
                 '}';
     }
 }
-
-
-
-//    private static final long serialVersionUID = 1L;
-
-//    public void addElement(int id, int initialSize){
-//        NodeComputers newNode = new NodeComputers(id, initialSize);
-//        if(isEmpty()) {
-//            tail.setNext(newNode);
-//            tail.setPrev(newNode);
-//        }
-//        else {
-//            NodeComputers head = tail.getNext();
-//
-//            newNode.setPrev(tail); // устанавливаем для нового значения Prev - Tail
-//            head.setPrev(newNode);  // устанавливаем для первого элемента Prev - Новый Tail
-//            newNode.setNext(head); // устанавливаем для нового значения
-//                                    // следующий элемент  - первый элемент списка
-//            tail.setNext(newNode); // для tail следующий элемент - новый Tail
-//        }
-//        tail = newNode;
-//        size++;
-//    }
