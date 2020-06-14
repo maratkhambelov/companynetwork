@@ -18,15 +18,14 @@ public class NodeComputers implements Serializable {
         this.id = id;
         this.size = initialSize;
     }
-
+    public int getId(){
+        return this.id;
+    }
     public NodeComputers getNext() {
         return this.next;
     }
     public NodeComputers getPrev() {
         return this.prev;
-    }
-    public int getId(){
-        return this.id;
     }
     public void setNext(NodeComputers next){
         this.next = next;
@@ -90,6 +89,8 @@ public class NodeComputers implements Serializable {
         return " Node: {" +
                 "id:'" + Integer.toString(id)  + "'" +
                 "memory:" + Integer.toString(memory) + "," +
+                "prevElem: " + getPrev().getId() + "," +
+                "nextElem: " + getNext().getId() + "," +
                 "queue: " + Arrays.toString(queueComputers) +
                 "},";
     }

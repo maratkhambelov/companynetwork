@@ -13,7 +13,7 @@ public class Main {
         Computer myComp4 = new Computer(4, 256);
 
         NodeComputers myNode = new NodeComputers(1, 0);
-        NodeComputers myNode2 = new NodeComputers(20, 0);
+        NodeComputers myNode2 = new NodeComputers(2, 0);
         NodeComputers myNode3 = new NodeComputers(3, 0);
 
         Network myNet = new Network();

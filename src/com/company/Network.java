@@ -7,27 +7,7 @@ public class Network implements Serializable {
     private NodeComputers tail; //последний элемент списка
     private int size = 0; //количество элеметов
     private int memory;
-    private static final long serialVersionUID = 1L;
 
-    public void addElement(int id, int initialSize){
-        NodeComputers newNode = new NodeComputers(id, initialSize);
-        if(isEmpty()) {
-//            tail = newNode;
-            tail.setNext(newNode);
-            tail.setPrev(newNode);
-        }
-        else {
-            NodeComputers head = tail.getNext();
-
-            newNode.setPrev(tail); // устанавливаем для нового значения Prev - Tail
-            head.setPrev(newNode);  // устанавливаем для первого элемента Prev - Новый Tail
-            newNode.setNext(head); // устанавливаем для нового значения
-                                    // следующий элемент  - первый элемент списка
-            tail.setNext(newNode); // для tail следующий элемент - новый Tail
-        }
-        tail = newNode;
-        size++;
-    }
     public void addElement(NodeComputers node){
         NodeComputers newNode = node;
         if(isEmpty()) {
@@ -133,3 +113,26 @@ public class Network implements Serializable {
                 '}';
     }
 }
+
+
+
+//    private static final long serialVersionUID = 1L;
+
+//    public void addElement(int id, int initialSize){
+//        NodeComputers newNode = new NodeComputers(id, initialSize);
+//        if(isEmpty()) {
+//            tail.setNext(newNode);
+//            tail.setPrev(newNode);
+//        }
+//        else {
+//            NodeComputers head = tail.getNext();
+//
+//            newNode.setPrev(tail); // устанавливаем для нового значения Prev - Tail
+//            head.setPrev(newNode);  // устанавливаем для первого элемента Prev - Новый Tail
+//            newNode.setNext(head); // устанавливаем для нового значения
+//                                    // следующий элемент  - первый элемент списка
+//            tail.setNext(newNode); // для tail следующий элемент - новый Tail
+//        }
+//        tail = newNode;
+//        size++;
+//    }
