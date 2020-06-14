@@ -37,8 +37,8 @@ public class Main {
 //        myNet.removeElement(myNode);
         System.out.println(myNet.toString());
 //        myNet.removeElement(nodeNotAdded);
-//        myNet.writeNetwork("C:\\Users\\Ralina\\Desktop\\structureNet.ser");
-//        myNet.readNetwork("C:\\Users\\Ralina\\Desktop\\structureNet.ser");
+        myNet.writeNetwork("C:\\Users\\Ralina\\Desktop\\structureNet.ser");
+        myNet.readNetwork("C:\\Users\\Ralina\\Desktop\\structureNet.ser");
 
     }
 }
