@@ -31,14 +31,8 @@ public class Network implements Serializable {
                     tail = newNode;
                     stop = true;
                 }
-                while(current !=  tail && !stop ){
-                    System.out.println("START WHILE");
-                    System.out.println(current.getId());
-                    System.out.println(newNode.getId());
-                    if(current.getId() > newNode.getId()){
-                        System.out.println(tail.getId());
-
-                        System.out.println("END IF");
+                while(!stop) {
+                    if(current.getId() > newNode.getId()) {
                         current.getPrev().setNext(newNode); // prev-prev -> newNode
                         newNode.setPrev(current.getPrev()); //  prev-prev<-newNode
                         newNode.setNext(current); // newNode-> last
@@ -46,16 +40,34 @@ public class Network implements Serializable {
                         stop = true;
                     }
                     else{
-
                         current = current.getNext();
-                        System.out.println(current.getId());
-                        System.out.println("current NEXT");
                     }
-//                    System.out.println(newNode.getId());
-//                    System.out.println(current.getId());
-//                    System.out.println(tail.getId());
-                    System.out.println("END WHILE");
                 }
+//                while(current !=  tail && !stop ){
+////                    System.out.println("START WHILE");
+////                    System.out.println(current.getId());
+////                    System.out.println(newNode.getId());
+//                    if(current.getId() > newNode.getId()){
+//                        System.out.println(tail.getId());
+//
+//                        System.out.println("END IF");
+//                        current.getPrev().setNext(newNode); // prev-prev -> newNode
+//                        newNode.setPrev(current.getPrev()); //  prev-prev<-newNode
+//                        newNode.setNext(current); // newNode-> last
+//                        current.setPrev(newNode); //newNode <- last
+//                        stop = true;
+//                    }
+//                    else{
+//
+//                        current = current.getNext();
+//                        System.out.println(current.getId());
+//                        System.out.println("current NEXT");
+//                    }
+////                    System.out.println(newNode.getId());
+////                    System.out.println(current.getId());
+////                    System.out.println(tail.getId());
+//                    System.out.println("END WHILE");
+//                }
             }
         }
         size++;
