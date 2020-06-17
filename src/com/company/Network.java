@@ -20,7 +20,6 @@ public class Network implements Serializable {
             if(!isFound(newNode)){
                 NodeComputers head = tail.getNext();
                 NodeComputers current = head;
-//                System.out.println(current.getId());
                 boolean stop = false;
                 if(tail.getId() < newNode.getId()){
                     newNode.setPrev(tail); // устанавливаем для нового значения Prev - Tail
@@ -43,35 +42,9 @@ public class Network implements Serializable {
                         current = current.getNext();
                     }
                 }
-//                while(current !=  tail && !stop ){
-////                    System.out.println("START WHILE");
-////                    System.out.println(current.getId());
-////                    System.out.println(newNode.getId());
-//                    if(current.getId() > newNode.getId()){
-//                        System.out.println(tail.getId());
-//
-//                        System.out.println("END IF");
-//                        current.getPrev().setNext(newNode); // prev-prev -> newNode
-//                        newNode.setPrev(current.getPrev()); //  prev-prev<-newNode
-//                        newNode.setNext(current); // newNode-> last
-//                        current.setPrev(newNode); //newNode <- last
-//                        stop = true;
-//                    }
-//                    else{
-//
-//                        current = current.getNext();
-//                        System.out.println(current.getId());
-//                        System.out.println("current NEXT");
-//                    }
-////                    System.out.println(newNode.getId());
-////                    System.out.println(current.getId());
-////                    System.out.println(tail.getId());
-//                    System.out.println("END WHILE");
-//                }
             }
         }
         size++;
-//        System.out.println("after Size++");
         setMemory(memory + node.getMemory());
     }
 

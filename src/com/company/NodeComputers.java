@@ -83,10 +83,10 @@ public class NodeComputers implements Serializable {
     @Override
     public String toString() {
         return " Node: {" +
-                "id:'" + Integer.toString(id)  + "'" +
-                "memory:" + Integer.toString(memory) + "," +
-                "prevElemId: " + getPrev().getId() + "," +
-                "nextElemId: " + getNext().getId() + "," +
+                "id: " + Integer.toString(id)  + ", "+
+                "memory: " + Integer.toString(memory) + ", " +
+                "prevElemId: " + getPrev().getId() + ", " +
+                "nextElemId: " + getNext().getId() + ", " +
                 "queue: " + Arrays.toString(queueComputers) +
                 "}," + "\n" ;
     }
