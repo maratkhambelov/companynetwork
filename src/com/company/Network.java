@@ -17,7 +17,7 @@ public class Network implements Serializable {
             tail = newNode;
         }
         else {
-            if(!isFound(newNode)){
+            if(findById(newNode.getId()) == null){
                 NodeComputers head = tail.getNext();
                 NodeComputers current = head;
                 boolean stop = false;
@@ -43,21 +43,35 @@ public class Network implements Serializable {
                     }
                 }
             }
+            else{
+                throw new Error("network has already node with same id");
+            }
         }
         size++;
         setMemory(memory + node.getMemory());
     }
 
     public void removeElement(NodeComputers node){
-        // проверка - находится ли элемент в списке
-        if(isFound(node)){
+        NodeComputers found = findById(node.getId());
+        if(node == tail) {
+           tail = tail.getPrev();
+        }
+        if(found != null && node.getNext() == node ){
+            this.tail = null;
+            size--;
+            throw new NullPointerException("all nodes removed");
+        }
+        else if(isFound(node)){
             node.getPrev().setNext(node.getNext());
             node.getNext().setPrev(node.getPrev());
             setMemory(memory - node.getMemory());
+            if(getMemory() < 0 ){
+                setMemory(0);
+            }
             size--;
         }
         else{
-            throw new RuntimeException("item was not found");
+            throw new Error("item was not found");
         }
     }
     public boolean isEmpty(){
@@ -87,6 +101,24 @@ public class Network implements Serializable {
         }
         return isFound;
     }
+    public NodeComputers findById(int id){
+        NodeComputers current = tail.getNext();
+        // продолжать поиск пока текущий элемент поиска не достигнет конца
+        // т.е. пока последний элемент не начнет ссылаться на первый элемент
+        if(id == tail.getId()) {
+            return tail;
+        }
+        while(current.getNext() !=  tail.getNext()) {
+            if(current.getId() == id) {
+                return current;
+            }
+            else{
+                current = current.getNext();
+            }
+        }
+
+        return null;
+    }
     public int getMemory(){
         return this.memory;
     }
@@ -94,18 +126,18 @@ public class Network implements Serializable {
         this.memory = newValue;
     }
     private String getStringNodes(){
-        String allElements = " NodeComputers: {" + "\n" ;
-
-        NodeComputers current = tail.getNext();
-        allElements = allElements + current.toString();
-
-        current = current.getNext();
-        while(current !=  tail.getNext()) {
+            String allElements = " NodeComputers: {" + "\n" ;
+            NodeComputers current = tail.getNext();
             allElements = allElements + current.toString();
+
             current = current.getNext();
-        }
-        allElements = allElements + " }";
-        return allElements;
+            while(current !=  tail.getNext()) {
+                allElements = allElements + current.toString();
+                current = current.getNext();
+            }
+            allElements = allElements + " }";
+            return allElements;
+
     }
     public void writeNetwork(String path) throws IOException {
         FileOutputStream outputStream = new FileOutputStream(path);
@@ -124,6 +156,7 @@ public class Network implements Serializable {
     public String toString() {
         return "Network: {" +
                 "memory:" + Integer.toString(memory) + "," +
+                "tailId: " + tail.getId() + ", " +
                 getStringNodes() +
                 '}';
     }

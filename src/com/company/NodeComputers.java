@@ -7,16 +7,15 @@ import java.util.Arrays;
 public class NodeComputers implements Serializable {
     private int id;
     private Computer[] queueComputers; //кольцевая очередь на основе массива
-    private Computer[] bufferQueue;
     private int memory;
-    private int size; // размер массива
+    private int amount; // количество элементов
 
-    private int tail; //последний элемент массива
     private NodeComputers next; //следующий узел в списке
     private NodeComputers prev;//предыдущий узел в списке
     public NodeComputers(int id, int initialSize){
         this.id = id;
-        this.size = initialSize;
+        this.queueComputers = new Computer[initialSize];
+        this.amount = 0;
     }
     public int getId(){
         return this.id;
@@ -33,46 +32,59 @@ public class NodeComputers implements Serializable {
     public void setPrev(NodeComputers prev){
         this.prev = prev;
     }
+
     public void addElement(Computer computer) {
-        if(isEmpty()) {
-            size++;
-            queueComputers = new Computer[size];
-            queueComputers[0] = computer;
-            tail = queueComputers.length - 1;
+        if(isFull()) {
+            throw new Error("queue is full");
+        }
+        else if(isFound(computer.getId())){
+            throw new Error("node has already computer with same id");
         }
         else{
-            size++;
-            bufferQueue = new Computer[size];
-            for(int i = 0; i < bufferQueue.length - 1; i++){
-                bufferQueue[i] =  queueComputers[i];
-            }
-            tail = bufferQueue.length-1;
-            bufferQueue[tail] = computer;
-            queueComputers = bufferQueue;
+            this.queueComputers[amount] = computer;
+            amount++;
         }
         setMemory(memory + computer.getMemory());
     }
+    public boolean isFull(){
+        if(amount == this.queueComputers.length){
+            return true;
+        }
+        return false;
+    }
     public boolean isEmpty(){
-        if(size == 0) {
+        if(amount == 0) {
             return true;
         }
         return false;
     }
     public void removeElement() {
         if (isEmpty()) {
-            throw new RuntimeException("queue is empty");
+            throw new Error("queue is empty");
         }
-        bufferQueue = new Computer[size];
+        Computer [] bufferQueue = new Computer[queueComputers.length];
         for(int i = 1; i <= queueComputers.length-1; i++) {
             bufferQueue[i-1] = queueComputers[i];
         }
-        bufferQueue[tail] = queueComputers[0]; // первый элемент в очереди помещается в конец очереди
+        bufferQueue[amount-1] = queueComputers[0]; // первый элемент в очереди помещается в конец очереди
+
         queueComputers = bufferQueue;
     }
     public void showElements(){
         for(int i = 0; i <= queueComputers.length-1; i++) {
             System.out.println(queueComputers[i].getId());
         }
+    }
+    public boolean isFound(int id){
+        if(!isEmpty()) {
+            for(int i = 0; i <= queueComputers.length-1; i++) {
+                if(queueComputers[i] != null && queueComputers[i].getId() == id){
+                    return true;
+                }
+            }
+        }
+        return false;
+
     }
     public int getMemory() {
         return this.memory;

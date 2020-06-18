@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="companyComputerNet:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/companyComputerNet_jar</output-path>
+    <root id="archive" name="companyComputerNet.jar">
+      <element id="module-output" name="companyComputerNet" />
+    </root>
+  </artifact>
+</component>
