@@ -7,8 +7,8 @@ import java.util.Scanner;
 public class Dialog {
     Scanner scan = new Scanner(System.in);
     Network myNet = new Network();
-    public  Dialog(){
-    }
+//    public  Dialog(){
+//    }
     public void start() throws IOException, ClassNotFoundException {
         try {
             int number;
