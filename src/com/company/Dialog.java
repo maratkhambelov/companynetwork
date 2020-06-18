@@ -7,8 +7,6 @@ import java.util.Scanner;
 public class Dialog {
     Scanner scan = new Scanner(System.in);
     Network myNet = new Network();
-//    public  Dialog(){
-//    }
     public void start() throws IOException, ClassNotFoundException {
         try {
             int number;
@@ -50,46 +48,6 @@ public class Dialog {
         catch (Throwable e ){
             System.out.println(e);
         }
-
-//        try{
-//
-//            System.out.println("Выберите действие: Введите для добавление узла - 1, для удаление Узла - 2, " +
-//                    "для добавления Компьютера - 3, для удаления компьютера - 4, " +
-//                    "для просмотра структуры сети - 5 ");
-//
-////
-//
-//                int answerAction = number;
-//                System.out.println(answerAction);
-//                switch (answerAction) {
-//                    case 1:
-//                        addNode();
-//                        break;
-//                    case 2:
-//                        removeNode();
-//                        break;
-//                    case 3:
-//                        addComputer();
-//                        break;
-//                    case 4:
-//                        removeComputer();
-//                        break;
-//                    case 5:
-//                        serializable();
-//                        break;
-//                    default:
-//                        break;
-//                }
-//
-//        }
-//
-//        catch (InputMismatchException e){
-//            System.out.println("");
-//        }
-//        catch (Throwable err) {
-//            System.out.println(err);
-//        }
-
 
     }
 
