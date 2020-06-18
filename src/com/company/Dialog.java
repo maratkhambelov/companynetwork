@@ -7,61 +7,87 @@ import java.util.Scanner;
 public class Dialog {
     Scanner scan = new Scanner(System.in);
     Network myNet = new Network();
-
     public  Dialog(){
-        NodeComputers myNode1 = new NodeComputers(1, 4);
-//        Computer myComp2 = new Computer(2, 256);
-//        Computer myComp3 = new Computer(3, 512);
-//        Computer myComp5 = new Computer(5, 128);
-//        myNet.addElement(myNode1);
-//        myNode1.addElement(myComp2);
-//        myNode1.addElement(myComp3);
-//        myNode1.addElement(myComp5);
     }
     public void start() throws IOException, ClassNotFoundException {
+        try {
+            int number;
 
-        while (true) {
-            try{
+            do {
                 System.out.println("Выберите действие: Введите для добавление узла - 1, для удаление Узла - 2, " +
                         "для добавления Компьютера - 3, для удаления компьютера - 4, " +
-                        "для просмотра структуры сети - 5 ");
-                int answerAction = scan.nextInt();
-
-                switch (answerAction) {
-                    case 1:
-                        addNode();
-                        break;
-                    case 2:
-                        removeNode();
-                        break;
-                    case 3:
-                        addComputer();
-                        break;
-                    case 4:
-                        removeComputer();
-                        break;
-                    case 5:
-                        serializable();
-                        break;
+                        "для просмотра структуры сети - 5");
+                while (!scan.hasNextInt()) {
+                    System.out.println("неправильно введенно значение");
+                    scan.next(); // this is important!
                 }
-                start();
-            }catch (InputMismatchException e){
-                System.out.println("неправильно введенно значение");
+                number = scan.nextInt();
+            } while (number < 0 && number > 5);
+            switch (number) {
+                case 1:
+                    addNode();
+                    break;
+                case 2:
+                    removeNode();
+                    break;
+                case 3:
+                    addComputer();
+                    break;
+                case 4:
+                    removeComputer();
+                    break;
+                case 5:
+                    serializable();
+                    break;
+                default:
+                    break;
             }
-            catch (Throwable err) {
-
-                System.out.println(err);
-            }
+            number = 0;
+            start();
+        }catch (InputMismatchException e){
+            System.out.println("неправильно введенно значение");
+        }
+        catch (Throwable e ){
+            System.out.println(e);
         }
 
-
-//        System.out.println("Продолжить? Для продолжения нажмите любую клавишу, для выхода нажмите клавишу 'q': ");
-//        String answerContinue = scan.nextLine();
-//        System.out.println(answerContinue);
-//        if(answerContinue != "q"){
-//            start();
-//        } else{
-//            return;
+//        try{
+//
+//            System.out.println("Выберите действие: Введите для добавление узла - 1, для удаление Узла - 2, " +
+//                    "для добавления Компьютера - 3, для удаления компьютера - 4, " +
+//                    "для просмотра структуры сети - 5 ");
+//
+////
+//
+//                int answerAction = number;
+//                System.out.println(answerAction);
+//                switch (answerAction) {
+//                    case 1:
+//                        addNode();
+//                        break;
+//                    case 2:
+//                        removeNode();
+//                        break;
+//                    case 3:
+//                        addComputer();
+//                        break;
+//                    case 4:
+//                        removeComputer();
+//                        break;
+//                    case 5:
+//                        serializable();
+//                        break;
+//                    default:
+//                        break;
+//                }
+//
+//        }
+//
+//        catch (InputMismatchException e){
+//            System.out.println("");
+//        }
+//        catch (Throwable err) {
+//            System.out.println(err);
 //        }
 
 
@@ -81,7 +107,6 @@ public class Dialog {
             System.out.println(myNet.toString());
         }
         catch (Throwable err) {
-
             System.out.println(err);
         }
 

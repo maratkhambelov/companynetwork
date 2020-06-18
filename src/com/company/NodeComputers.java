@@ -70,11 +70,6 @@ public class NodeComputers implements Serializable {
 
         queueComputers = bufferQueue;
     }
-    public void showElements(){
-        for(int i = 0; i <= queueComputers.length-1; i++) {
-            System.out.println(queueComputers[i].getId());
-        }
-    }
     public boolean isFound(int id){
         if(!isEmpty()) {
             for(int i = 0; i <= queueComputers.length-1; i++) {
