@@ -1,6 +1,9 @@
 package com.company;
 
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -12,9 +15,9 @@ public class Dialog {
             int number;
 
             do {
-                System.out.println("Выберите действие: Введите для добавление узла - 1, для удаление Узла - 2, " +
-                        "для добавления Компьютера - 3, для удаления компьютера - 4, " +
-                        "для просмотра структуры сети - 5");
+                System.out.println("Введите число: \nдля добавление узла - 1, \nдля удаление узла - 2, " +
+                        "\nдля добавления Компьютера - 3, \nдля удаления компьютера - 4, " +
+                        "\nдля просмотра структуры сети - 5");
                 while (!scan.hasNextInt()) {
                     System.out.println("неправильно введенно значение");
                     scan.next(); // this is important!
@@ -140,10 +143,13 @@ public class Dialog {
 
     }
     public void serializable() throws IOException, ClassNotFoundException {
-        String path = "C:\\Users\\Ralina\\Desktop\\structureNet.ser";
-        if(!myNet.isEmpty()) {
-            myNet.writeNetwork(path);
-            myNet.readNetwork(path);
+        if(!myNet.isEmpty()){
+            BytesUtil util = new BytesUtil();
+            Path path = Paths.get("src\\structureNet.ser");
+            byte[] netBytes = util.toByteArray(myNet);
+            Files.write(path, netBytes);
+            byte[] fileBytes = Files.readAllBytes(path);
+            System.out.println(util.toObject(fileBytes));
         }
     }
 }

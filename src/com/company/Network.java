@@ -139,19 +139,6 @@ public class Network implements Serializable {
             return allElements;
 
     }
-    public void writeNetwork(String path) throws IOException {
-        FileOutputStream outputStream = new FileOutputStream(path);
-        ObjectOutputStream objectOutputStream = new ObjectOutputStream(outputStream);
-        objectOutputStream.writeObject(this);
-        objectOutputStream.close();
-    }
-    public void readNetwork(String path) throws IOException, ClassNotFoundException {
-        FileInputStream fileInputStream = new FileInputStream(path);
-        ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
-        Network thisNetwork = (Network) objectInputStream.readObject();
-        objectInputStream.close();
-        System.out.println(thisNetwork);
-    }
     @Override
     public String toString() {
         return "Network: {" +

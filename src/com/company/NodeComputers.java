@@ -9,13 +9,16 @@ public class NodeComputers implements Serializable {
     private Computer[] queueComputers; //кольцевая очередь на основе массива
     private int memory;
     private int amount; // количество элементов
-
+    private int first;
+    private int last;
     private NodeComputers next; //следующий узел в списке
     private NodeComputers prev;//предыдущий узел в списке
     public NodeComputers(int id, int initialSize){
         this.id = id;
         this.queueComputers = new Computer[initialSize];
         this.amount = 0;
+        this.first = 0;
+        this.last = 0;
     }
     public int getId(){
         return this.id;
@@ -41,7 +44,11 @@ public class NodeComputers implements Serializable {
             throw new Error("node has already computer with same id");
         }
         else{
-            this.queueComputers[amount] = computer;
+            this.queueComputers[last] = computer;
+            this.last++;
+            if(last > queueComputers.length-1){
+                last = 0;
+            }
             amount++;
         }
         setMemory(memory + computer.getMemory());
@@ -62,13 +69,13 @@ public class NodeComputers implements Serializable {
         if (isEmpty()) {
             throw new Error("queue is empty");
         }
-        Computer [] bufferQueue = new Computer[queueComputers.length];
-        for(int i = 1; i <= queueComputers.length-1; i++) {
-            bufferQueue[i-1] = queueComputers[i];
+        setMemory(memory - this.queueComputers[first].getMemory());
+        this.queueComputers[first] = null;
+        first++;
+        if(first > queueComputers.length-1){
+            first = 0;
         }
-        bufferQueue[amount-1] = queueComputers[0]; // первый элемент в очереди помещается в конец очереди
-
-        queueComputers = bufferQueue;
+        amount--;
     }
     public boolean isFound(int id){
         if(!isEmpty()) {
@@ -94,7 +101,11 @@ public class NodeComputers implements Serializable {
                 "memory: " + Integer.toString(memory) + ", " +
                 "prevElemId: " + getPrev().getId() + ", " +
                 "nextElemId: " + getNext().getId() + ", " +
-                "queue: " + Arrays.toString(queueComputers) +
+                "queue: " + Arrays.toString(queueComputers) + ", " +
+                "first: " + Integer.toString(first)  + ", "+
+                "last: " + Integer.toString(last)  + ", "+
+                "amount: " + Integer.toString(amount)  + ", "+
+
                 "}," + "\n" ;
     }
 }
