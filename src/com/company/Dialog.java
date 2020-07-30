@@ -10,11 +10,17 @@ import java.util.Scanner;
 public class Dialog {
     Scanner scan = new Scanner(System.in);
     Network myNet = new Network();
+    NodeComputers node = new NodeComputers(1, 3);// TODO: delete
+    Computer comp1 = new Computer(1,1); // TODO: delete
+    Computer comp2 = new Computer(2,2);// TODO: delete
+    Computer comp3 = new Computer(3,3);// TODO: delete
+
     public void start() throws IOException, ClassNotFoundException {
         try {
             int number;
 
             do {
+
                 System.out.println("Введите число: \nдля добавление узла - 1, \nдля удаление узла - 2, " +
                         "\nдля добавления Компьютера - 3, \nдля удаления компьютера - 4, " +
                         "\nдля просмотра структуры сети - 5");
@@ -39,6 +45,12 @@ public class Dialog {
                     break;
                 case 5:
                     serializable();
+                    break;
+                case 6:
+                    node.addElement(comp1); // TODO: delete
+                    node.addElement(comp2); // TODO: delete
+                    node.addElement(comp3); // TODO: delete
+                    myNet.addElement(node); // TODO: delete
                     break;
                 default:
                     break;
@@ -145,7 +157,7 @@ public class Dialog {
     public void serializable() throws IOException, ClassNotFoundException {
         if(!myNet.isEmpty()){
             BytesUtil util = new BytesUtil();
-            Path path = Paths.get("src\\structureNet.ser");
+            Path path = Paths.get("structureNet.ser");
             byte[] netBytes = util.toByteArray(myNet);
             Files.write(path, netBytes);
             byte[] fileBytes = Files.readAllBytes(path);

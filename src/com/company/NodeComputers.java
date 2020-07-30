@@ -77,6 +77,52 @@ public class NodeComputers implements Serializable {
         }
         amount--;
     }
+    public String toStringCircle(){
+        String circle = "[ ";
+        if(first < last ) {
+            for(int i = first; i <= last ; i++){
+                if (queueComputers[i] != null) {
+                    circle += queueComputers[i].toString() + ", ";
+                }
+            }
+        }
+        else if(first > last){
+            if(last == 0) {
+                for(int i = first; i <= queueComputers.length-1 ; i++){
+                    if (queueComputers[i] != null) {
+                        circle += queueComputers[i].toString() + ", ";
+                    }
+                }
+            }
+            else{
+                for(int i = first; i >= last-1 ; i--){
+                    if (queueComputers[i] != null) {
+                        circle += queueComputers[i].toString() + ", ";
+                    }
+                }
+            }
+        }
+        else if(first == last) {
+            if(first == 0 && last == 0) {
+                for(int i = first; i <= queueComputers.length-1 ; i++){
+                    if (queueComputers[i] != null) {
+                        circle += queueComputers[i].toString() + ", ";
+                    }
+                }
+            }
+            if(first == queueComputers.length-1 && last == queueComputers.length-1) {
+                circle += queueComputers[first].toString() + ", ";
+                for(int i = 0; i <= last-1 ; i++){
+                    if (queueComputers[i] != null) {
+                        circle += queueComputers[i].toString() + ", ";
+                    }
+                }
+            }
+        }
+        circle += " ]";
+        return circle;
+    }
+
     public boolean isFound(int id){
         if(!isEmpty()) {
             for(int i = 0; i <= queueComputers.length-1; i++) {
@@ -101,11 +147,14 @@ public class NodeComputers implements Serializable {
                 "memory: " + Integer.toString(memory) + ", " +
                 "prevElemId: " + getPrev().getId() + ", " +
                 "nextElemId: " + getNext().getId() + ", " +
-                "queue: " + Arrays.toString(queueComputers) + ", " +
+                "\n" +
+                "queue: " + toStringCircle() + ", " +
+                "\n" +
                 "first: " + Integer.toString(first)  + ", "+
                 "last: " + Integer.toString(last)  + ", "+
-                "amount: " + Integer.toString(amount)  + ", "+
-
+                "amount: " + Integer.toString(amount)  + ", " +
+                "size: " + Integer.toString(queueComputers.length) + ", " +
+                "\n" +
                 "}," + "\n" ;
     }
 }
