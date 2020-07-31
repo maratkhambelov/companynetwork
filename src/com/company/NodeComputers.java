@@ -1,10 +1,6 @@
 package com.company;
 
-
-import java.io.Serializable;
-import java.util.Arrays;
-
-public class NodeComputers implements Serializable {
+public class NodeComputers{
     private int id;
     private Computer[] queueComputers; //кольцевая очередь на основе массива
     private int memory;
@@ -133,23 +129,23 @@ public class NodeComputers implements Serializable {
     @Override
     public String toString() {
         return " Node: {" +
-                "id: " + Integer.toString(id)  + ", "+
-                "memory: " + Integer.toString(memory) + ", " +
+                "id: " + id  + ", "+
+                "memory: " +  memory + ", " +
                 "prevElemId: " + getPrev().getId() + ", " +
                 "nextElemId: " + getNext().getId() + ", " +
                 "\n" +
                 "queue: " + toStringCircle() + ", " +
                 "\n" +
-                "first: " + Integer.toString(first)  + ", "+
-                "last: " + Integer.toString(last)  + ", "+
-                "amountComputers: " + Integer.toString(amount)  + ", " +
-                "size: " + Integer.toString(queueComputers.length) + ", " +
+                "first: " + first  + ", "+
+                "last: " + last  + ", "+
+                "amountComputers: " + amount  + ", " +
+                "size: " + queueComputers.length + ", " +
                 "}," + "\n" ;
     }
     public String toStringShort(){
         return " Node: {" +
-                "id: " + Integer.toString(id)  + ", "+
-                "amountComputers: " + Integer.toString(amount)  + ", " +
+                "id: " + id + ", "+
+                "amountComputers: " + amount  + ", " +
                 "queue: " + toStringCircle() + ", " +
                 "}," + "\n" ;
     }

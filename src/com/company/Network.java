@@ -1,9 +1,8 @@
 package com.company;
 
 
-import java.io.*;
 
-public class Network implements Serializable {
+public class Network {
     private NodeComputers tail; //последний элемент списка
     private int size = 0; //количество элеметов
     private int memory;
@@ -135,7 +134,7 @@ public class Network implements Serializable {
                 allElements = allElements + current.toString();
                 current = current.getNext();
             }
-            allElements = allElements + " }";
+            allElements = allElements + " }" + "\n";
             return allElements;
     }
     public String getStringNodesShort(){
@@ -151,13 +150,13 @@ public class Network implements Serializable {
             current = current.getNext();
             amountNodes++;
         }
-        allElements = allElements  + "amountNodes: " + Integer.toString(amountNodes) + " }";
+        allElements = allElements  + "amountNodes: " + amountNodes + " }";
         return allElements;
     }
     @Override
     public String toString() {
         return "Network: {" +
-                "memory:" + Integer.toString(memory) + "," +
+                "memory:" + memory + "," +
                 "tailId: " + tail.getId() + ", " +
                 getStringNodes() +
                 '}';

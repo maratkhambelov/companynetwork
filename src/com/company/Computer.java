@@ -1,8 +1,7 @@
 package com.company;
 
-import java.io.Serializable;
 
-public class Computer implements Serializable {
+public class Computer {
     private int id;
     private int memory;
 
@@ -21,8 +20,8 @@ public class Computer implements Serializable {
     @Override
     public String toString() {
         return "Computer: {" +
-                "id:'" + Integer.toString(id)  + "', " +
-                "memory: " + Integer.toString(memory) +
+                "id:'" + id  + "', " +
+                "memory: " + memory +
                 '}';
     }
 

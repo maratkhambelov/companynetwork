@@ -1,23 +1,16 @@
 package com.company;
 
-import java.io.IOException;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Dialog {
     Scanner scan = new Scanner(System.in);
     Network myNet = new Network();
-    NodeComputers node = new NodeComputers(1, 3);// TODO: delete
-    Computer comp1 = new Computer(1,1); // TODO: delete
-    Computer comp2 = new Computer(2,2);// TODO: delete
-    Computer comp3 = new Computer(3,3);// TODO: delete
 
-    public void start() throws IOException, ClassNotFoundException {
+    public void start() {
         try {
             int number;
-
             do {
-
                 System.out.println("Введите число: \nдля добавление узла - 1, \nдля удаление узла - 2, " +
                         "\nдля добавления Компьютера - 3, \nдля удаления компьютера - 4, " +
                         "\nдля просмотра структуры сети в расширенном виде - 5, " +
@@ -47,13 +40,6 @@ public class Dialog {
                 case 6:
                     toReadStructure();
                     break;
-//                case 7:
-//                    node.addElement(comp1); // TODO: delete
-//                    node.addElement(comp2); // TODO: delete
-//                    node.addElement(comp3); // TODO: delete
-//                    myNet.addElement(node); // TODO: delete
-//                    toWriteStructure();
-//                    break;
                 default:
                     break;
             }
@@ -68,7 +54,7 @@ public class Dialog {
 
     }
 
-    public void addNode() throws IOException, ClassNotFoundException {
+    public void addNode(){
         try{
             if(!myNet.isEmpty()){
                 System.out.println(myNet.toString());
@@ -86,7 +72,7 @@ public class Dialog {
             System.out.println(err);
         }
     }
-    public void removeNode() throws IOException, ClassNotFoundException {
+    public void removeNode() {
         try{
             if(myNet.isEmpty()){
                 throw new Error("Сеть не содержит узлов");
@@ -101,13 +87,12 @@ public class Dialog {
             myNet.removeElement(found);
             toWriteStructure();
             toReadStructure();
-
         }
         catch (Throwable err) {
             System.out.println(err);
         }
     }
-    public void addComputer() throws IOException, ClassNotFoundException {
+    public void addComputer(){
         try{
             if(myNet.isEmpty()){
                 throw new Error("Сеть не содержит узлов, создайте узел");
@@ -134,7 +119,7 @@ public class Dialog {
             System.out.println(err);
         }
     }
-    public void removeComputer() throws IOException, ClassNotFoundException {
+    public void removeComputer(){
         try {
             if(myNet.isEmpty()){
                 throw new Error("Сеть не содержит узлов");
