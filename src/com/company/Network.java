@@ -137,7 +137,22 @@ public class Network implements Serializable {
             }
             allElements = allElements + " }";
             return allElements;
+    }
+    public String getStringNodesShort(){
+        int amountNodes = 0;
+        String allElements = " NodeComputers: {" + "\n" ;
+        NodeComputers current = tail.getNext();
+        allElements = allElements + current.toStringShort();
 
+        current = current.getNext();
+        amountNodes++;
+        while(current !=  tail.getNext()) {
+            allElements = allElements + current.toStringShort();
+            current = current.getNext();
+            amountNodes++;
+        }
+        allElements = allElements  + "amountNodes: " + Integer.toString(amountNodes) + " }";
+        return allElements;
     }
     @Override
     public String toString() {
@@ -146,5 +161,10 @@ public class Network implements Serializable {
                 "tailId: " + tail.getId() + ", " +
                 getStringNodes() +
                 '}';
+    }
+    public String toStringShort(){
+        return " Network: {" +
+                getStringNodesShort() +
+                "}," + "\n" ;
     }
 }

@@ -1,9 +1,6 @@
 package com.company;
 
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -23,13 +20,14 @@ public class Dialog {
 
                 System.out.println("Введите число: \nдля добавление узла - 1, \nдля удаление узла - 2, " +
                         "\nдля добавления Компьютера - 3, \nдля удаления компьютера - 4, " +
-                        "\nдля просмотра структуры сети - 5");
+                        "\nдля просмотра структуры сети в расширенном виде - 5, " +
+                        "\nдля чтения структуры из файла - 6");
                 while (!scan.hasNextInt()) {
                     System.out.println("неправильно введенно значение");
-                    scan.next(); // this is important!
+                    scan.next();
                 }
                 number = scan.nextInt();
-            } while (number < 0 && number > 5);
+            } while (number < 0 && number > 6);
             switch (number) {
                 case 1:
                     addNode();
@@ -44,14 +42,18 @@ public class Dialog {
                     removeComputer();
                     break;
                 case 5:
-                    serializable();
+                    showStructure();
                     break;
                 case 6:
-                    node.addElement(comp1); // TODO: delete
-                    node.addElement(comp2); // TODO: delete
-                    node.addElement(comp3); // TODO: delete
-                    myNet.addElement(node); // TODO: delete
+                    toReadStructure();
                     break;
+//                case 7:
+//                    node.addElement(comp1); // TODO: delete
+//                    node.addElement(comp2); // TODO: delete
+//                    node.addElement(comp3); // TODO: delete
+//                    myNet.addElement(node); // TODO: delete
+//                    toWriteStructure();
+//                    break;
                 default:
                     break;
             }
@@ -77,12 +79,12 @@ public class Dialog {
             int idNode = scan.nextInt();
             NodeComputers newNode = new NodeComputers(idNode, sizeQueue);
             myNet.addElement(newNode);
-            System.out.println(myNet.toString());
+            toWriteStructure();
+            toReadStructure();
         }
         catch (Throwable err) {
             System.out.println(err);
         }
-
     }
     public void removeNode() throws IOException, ClassNotFoundException {
         try{
@@ -97,13 +99,13 @@ public class Dialog {
                 throw new Error("узел по уникальному номеру не найден");
             }
             myNet.removeElement(found);
-            serializable();
+            toWriteStructure();
+            toReadStructure();
+
         }
         catch (Throwable err) {
             System.out.println(err);
         }
-
-
     }
     public void addComputer() throws IOException, ClassNotFoundException {
         try{
@@ -121,7 +123,9 @@ public class Dialog {
                 int memoryComp = scan.nextInt();
                 Computer newComp = new Computer(idComp, memoryComp);
                 found.addElement(newComp);
-                serializable();
+                toWriteStructure();
+                showStructure();
+
             }
             else{
                 System.out.println("Данный узел не найден ");
@@ -129,8 +133,6 @@ public class Dialog {
         }catch (Throwable err){
             System.out.println(err);
         }
-
-
     }
     public void removeComputer() throws IOException, ClassNotFoundException {
         try {
@@ -145,6 +147,7 @@ public class Dialog {
                 found.removeElement();
                 System.out.println("Компьютер удален из очереди");
                 System.out.println(found.toString());
+                toWriteStructure();
             }
             else{
                 System.out.println("Данный узел не найден");
@@ -154,14 +157,21 @@ public class Dialog {
         }
 
     }
-    public void serializable() throws IOException, ClassNotFoundException {
+    public void showStructure() {
         if(!myNet.isEmpty()){
-            BytesUtil util = new BytesUtil();
-            Path path = Paths.get("structureNet.ser");
-            byte[] netBytes = util.toByteArray(myNet);
-            Files.write(path, netBytes);
-            byte[] fileBytes = Files.readAllBytes(path);
-            System.out.println(util.toObject(fileBytes));
+            System.out.println(myNet.toString());
         }
+    }
+    public void toWriteStructure() {
+        if(!myNet.isEmpty()){
+            TextUtil util = new TextUtil();
+            String path = "companyStructure.txt";
+            util.toWrite(myNet, path);
+        }
+    }
+    public void toReadStructure() {
+        TextUtil util = new TextUtil();
+        String path = "companyStructure.txt";
+        util.toRead(path);
     }
 }

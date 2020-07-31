@@ -79,7 +79,22 @@ public class NodeComputers implements Serializable {
     }
     public String toStringCircle(){
         String circle = "[ ";
-        if(first < last ) {
+        if(last == 0) {
+            for(int i = first; i <= queueComputers.length-1 ; i++){
+                if (queueComputers[i] != null) {
+                    circle += queueComputers[i].toString() + ", ";
+                }
+            }
+        }
+        else if(first == queueComputers.length-1 && last == queueComputers.length-1) {
+            circle += queueComputers[first].toString() + ", ";
+            for(int i = 0; i <= last-1 ; i++){
+                if (queueComputers[i] != null) {
+                    circle += queueComputers[i].toString() + ", ";
+                }
+            }
+        }
+        else if(first < last ) {
             for(int i = first; i <= last ; i++){
                 if (queueComputers[i] != null) {
                     circle += queueComputers[i].toString() + ", ";
@@ -87,38 +102,13 @@ public class NodeComputers implements Serializable {
             }
         }
         else if(first > last){
-            if(last == 0) {
-                for(int i = first; i <= queueComputers.length-1 ; i++){
-                    if (queueComputers[i] != null) {
-                        circle += queueComputers[i].toString() + ", ";
-                    }
-                }
-            }
-            else{
-                for(int i = first; i >= last-1 ; i--){
-                    if (queueComputers[i] != null) {
-                        circle += queueComputers[i].toString() + ", ";
-                    }
+            for(int i = first; i >= last-1 ; i--){
+                if (queueComputers[i] != null) {
+                    circle += queueComputers[i].toString() + ", ";
                 }
             }
         }
-        else if(first == last) {
-            if(first == 0 && last == 0) {
-                for(int i = first; i <= queueComputers.length-1 ; i++){
-                    if (queueComputers[i] != null) {
-                        circle += queueComputers[i].toString() + ", ";
-                    }
-                }
-            }
-            if(first == queueComputers.length-1 && last == queueComputers.length-1) {
-                circle += queueComputers[first].toString() + ", ";
-                for(int i = 0; i <= last-1 ; i++){
-                    if (queueComputers[i] != null) {
-                        circle += queueComputers[i].toString() + ", ";
-                    }
-                }
-            }
-        }
+
         circle += " ]";
         return circle;
     }
@@ -152,9 +142,15 @@ public class NodeComputers implements Serializable {
                 "\n" +
                 "first: " + Integer.toString(first)  + ", "+
                 "last: " + Integer.toString(last)  + ", "+
-                "amount: " + Integer.toString(amount)  + ", " +
+                "amountComputers: " + Integer.toString(amount)  + ", " +
                 "size: " + Integer.toString(queueComputers.length) + ", " +
-                "\n" +
+                "}," + "\n" ;
+    }
+    public String toStringShort(){
+        return " Node: {" +
+                "id: " + Integer.toString(id)  + ", "+
+                "amountComputers: " + Integer.toString(amount)  + ", " +
+                "queue: " + toStringCircle() + ", " +
                 "}," + "\n" ;
     }
 }

@@ -25,4 +25,5 @@ public class Computer implements Serializable {
                 "memory: " + Integer.toString(memory) +
                 '}';
     }
+
 }
