@@ -1,3 +1,4 @@
  Network: { NodeComputers: {
- Node: {id: 2, amountComputers: 1, queue: [ Computer: {id:'1', memory: 1},  ], },
-amountNodes: 1 }},
+ Node: {id: 2, amountComputers: 0, queue: [  ], },
+ Node: {id: 3, amountComputers: 0, queue: [  ], },
+amountNodes: 2 }},
