@@ -58,7 +58,7 @@ public class Network {
         if(found != null && node.getNext() == node ){
             this.tail = null;
             size--;
-            throw new NullPointerException("all nodes removed");
+//            throw new NullPointerException("all nodes removed");
         }
         else if(isFound(node)){
             node.getPrev().setNext(node.getNext());
@@ -153,6 +153,44 @@ public class Network {
         allElements = allElements  + "amountNodes: " + amountNodes + " }";
         return allElements;
     }
+    public Integer getLength(){
+        int amountNodes = 0;
+        NodeComputers current = tail.getNext();
+
+        current = current.getNext();
+        amountNodes++;
+        while(current !=  tail.getNext()) {
+            current = current.getNext();
+            amountNodes++;
+        }
+        return amountNodes;
+    }
+    public NodeComputers[] getNodes(){
+        int length = this.getLength();
+        NodeComputers current = tail.getNext();
+        NodeComputers[] nodes = new NodeComputers[length];
+        for (int j = 0; j <= length-1; j++) {
+            nodes[j] = current;
+            current = current.getNext();
+        }
+        return nodes;
+    }
+    public String[][] getMainInfo(){
+        int length = this.getLength();
+        int countRows = 3;
+        System.out.println(this.getLength());
+        String[][] nodesMainInfo = new String[length][countRows];
+        NodeComputers current = tail.getNext();
+        System.out.println(current.getId());
+        for (int j = 0; j <= length-1; j++) {
+            nodesMainInfo[j][0] = String.valueOf(current.getId());
+            nodesMainInfo[j][1] = String.valueOf(current.getAmountComputers());
+            nodesMainInfo[j][2] = String.valueOf(current.getMemory());
+            current = current.getNext();
+        }
+        return nodesMainInfo;
+    }
+
     @Override
     public String toString() {
         return "Network: {" +

@@ -83,7 +83,9 @@ public class NodeComputers{
             }
         }
         else if(first == queueComputers.length-1 && last == queueComputers.length-1) {
-            circle += queueComputers[first].toString() + ", ";
+            if(queueComputers[first] != null && queueComputers[last] != null) {
+                circle += queueComputers[first].toString() + ", ";
+            }
             for(int i = 0; i <= last-1 ; i++){
                 if (queueComputers[i] != null) {
                     circle += queueComputers[i].toString() + ", ";
@@ -126,6 +128,9 @@ public class NodeComputers{
     public void setMemory(int newValue){
         this.memory = newValue;
     }
+    public int getAmountComputers(){
+        return this.amount;
+    }
     @Override
     public String toString() {
         return " Node: {" +
@@ -148,5 +153,49 @@ public class NodeComputers{
                 "amountComputers: " + amount  + ", " +
                 "queue: " + toStringCircle() + ", " +
                 "}," + "\n" ;
+    }
+    public String[][] toStringCircleAtTable(){
+        int length = this.queueComputers.length;
+        int countRows = 2;
+        String[][] computersMainInfo = new String[length][countRows];
+        if(last == 0) {
+            for(int i = first; i <= queueComputers.length-1 ; i++){
+                if (queueComputers[i] != null) {
+                    computersMainInfo[i][0] = String.valueOf(this.queueComputers[i].getId());
+                    computersMainInfo[i][1] = String.valueOf(this.queueComputers[i].getMemory());
+
+                }
+            }
+        }
+        else if(first == queueComputers.length-1 && last == queueComputers.length-1) {
+            if(queueComputers[first] != null && queueComputers[last] != null) {
+                computersMainInfo[first][0] = String.valueOf(this.queueComputers[first].getId());
+                computersMainInfo[first][1] = String.valueOf(this.queueComputers[first].getMemory());
+            }
+            for(int i = 0; i <= last-1 ; i++){
+                if (queueComputers[i] != null) {
+                    computersMainInfo[i][0] = String.valueOf(this.queueComputers[i].getId());
+                    computersMainInfo[i][1] = String.valueOf(this.queueComputers[i].getMemory());
+                }
+            }
+        }
+        else if(first < last ) {
+            for(int i = first; i <= last ; i++){
+                if (queueComputers[i] != null) {
+                    computersMainInfo[i][0] = String.valueOf(this.queueComputers[i].getId());
+                    computersMainInfo[i][1] = String.valueOf(this.queueComputers[i].getMemory());
+                }
+            }
+        }
+        else if(first > last){
+            for(int i = first; i >= last-1 ; i--){
+                if (queueComputers[i] != null) {
+                    computersMainInfo[i][0] = String.valueOf(this.queueComputers[i].getId());
+                    computersMainInfo[i][1] = String.valueOf(this.queueComputers[i].getMemory());
+                }
+            }
+        }
+
+        return computersMainInfo;
     }
 }
