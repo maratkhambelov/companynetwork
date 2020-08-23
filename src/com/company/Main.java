@@ -1,14 +1,9 @@
 package com.company;
 
 
-import javax.swing.*;
 
 public class Main {
     public static void main(String[] args){
-//        Dialog newDialog = new Dialog();
-//        newDialog.start();
-//        JFrame jFrame = new JFrame();
-//        WindowUI WindowUI = new WindowUI();
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
