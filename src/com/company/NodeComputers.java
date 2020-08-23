@@ -34,7 +34,7 @@ public class NodeComputers{
 
     public void addElement(Computer computer) {
         if(isFull()) {
-            throw new Error("queue is full");
+            throw new ArrayIndexOutOfBoundsException("queue is full");
         }
         else if(isFound(computer.getId())){
             throw new Error("node has already computer with same id");
@@ -63,7 +63,7 @@ public class NodeComputers{
     }
     public void removeElement() {
         if (isEmpty()) {
-            throw new Error("queue is empty");
+            throw new ArrayIndexOutOfBoundsException("queue is empty");
         }
         setMemory(memory - this.queueComputers[first].getMemory());
         this.queueComputers[first] = null;

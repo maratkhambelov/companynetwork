@@ -201,85 +201,12 @@ public class DialogUI extends javax.swing.JFrame {
 
     private void jBtnRmvNodeActionPerformed(java.awt.event.ActionEvent evt) {
 
-        try{
-            // находим выделенную строку и извлекаем оттуда id
-            int row = jTable1.getSelectedRow();
-            if(row == -1){
-                throw new Error("Cписок узлов пуст");
-            }
 
-            int idSelectedNode = Integer.parseInt(jTable1.getValueAt(row, idxIdTable).toString());
-            // находим нужный узел и удаляем компьютера из очереди
-            NodeComputers foundNode = myNet.findById(idSelectedNode);
-            myNet.removeElement(foundNode);
-
-            // обновляем таблицу
-            if(myNet.isEmpty() != true) {
-                jTable1.setModel(new DefaultTableModel(
-                        myNet.getMainInfo(),
-                        labelsJTable1
-                ));
-                // берем первую строку из таблицы и выводим ее компьютеры
-                if(jTable1.getSelectedRow() == -1){
-                    jTable1.setRowSelectionInterval(0, 0);
-                    int idNewSelectedNode = Integer.parseInt(jTable1.getValueAt(0, 0).toString());
-                    NodeComputers foundNewNode = myNet.findById(idNewSelectedNode);
-                    jTable2.setModel(new DefaultTableModel(
-                            foundNewNode.toStringCircleAtTable(),
-                            labelsJTable2
-                    ));
-                }
-            }
-            else {
-                jTable1.setModel(new DefaultTableModel(
-                        new Object [][] {},
-                        labelsJTable1
-                ));
-            }
-        }
-        catch(Throwable e){
-            System.out.println(e);
-            String err = String.valueOf(e);
-            jLabel1.setText(err);
-        }
 
     }
 
     private void jBtnAddCompActionPerformed(java.awt.event.ActionEvent evt) {
-        try{
-            // извлекаем значения из textfield
-            int id = Integer.parseInt(jTxtFieldIdComp.getText());
-            int memory = Integer.parseInt(jTxtFieldMemoryComp.getText());
 
-            // находим выделенную строку и извлекаем оттуда id
-            int row = jTable1.getSelectedRow();
-            String idSelectedRowTableString = jTable1.getValueAt(row, 0).toString();
-            int idSelectedRowTableInt = Integer.parseInt(idSelectedRowTableString);
-
-            // работаем с данными
-            NodeComputers selectedNode = myNet.findById(idSelectedRowTableInt);
-            Computer newComp = new Computer(id, memory);
-            selectedNode.addElement(newComp);
-
-            // обновляем таблицы:
-            // обновляем общее количество в памяти, кол-во компьютеров в первой таблице
-            // обновляем таблицу 2
-            jTable1.setValueAt(selectedNode.getMemory(), row, idxMemoryJTable1);
-            jTable1.setValueAt(selectedNode.getAmountComputers(), row, idxAmountComputers);
-
-            jTable2.setModel(new DefaultTableModel(
-                    selectedNode.toStringCircleAtTable(),
-                    labelsJTable2
-            ));
-            jLabel1.setText("");
-            // стираем старые значения textfield
-//        jTxtFieldIdComp.setText("");
-//        jTxtFieldMemoryComp.setText("");
-        }
-        catch(Throwable e){
-            String err = String.valueOf(e);
-            jLabel1.setText(err);
-        }
     }
 
     private void jTxtFieldIdNodeActionPerformed(java.awt.event.ActionEvent evt) {
@@ -313,41 +240,7 @@ public class DialogUI extends javax.swing.JFrame {
     }
 
     private void jBtnAddNodeActionPerformed(java.awt.event.ActionEvent evt) {
-        try{
-            // извлекаем значения из textfield
-            String idString = jTxtFieldIdNode.getText();
-            int idInt = Integer.parseInt(idString);
-            int queueSize = Integer.parseInt(jTxtFieldQueueSize.getText());
 
-            // работаем с данными: добавляем узел в сеть
-            myNet.addElement(new NodeComputers(idInt, queueSize));
-
-
-            // обновляем таблицы
-            jTable1.setModel(new DefaultTableModel(
-                    myNet.getMainInfo(),
-                    labelsJTable1
-            ));
-
-            // выделяем актуальную строку в jTable1
-            int idxNewRowSelected = this.getRowByValueAndCol(jTable1.getModel(), idString, idxIdTable);
-            jTable1.setRowSelectionInterval(idxNewRowSelected,idxNewRowSelected);
-
-            //находим текущий узел и показываем компьюьтеры этого узла
-            NodeComputers foundNode = myNet.findById(idInt);
-            jTable2.setModel(new DefaultTableModel(
-                    foundNode.toStringCircleAtTable(),
-                    labelsJTable2
-            ));
-            jLabel1.setText("");
-
-// стираем старые значения textfield
-//        jTxtFieldIdNode.setText("");
-//        jTxtFieldQueueSize.setText("");
-        }catch(Throwable e){
-            String err = String.valueOf(e);
-            jLabel1.setText("В сети уже содержится узел с данным id");
-        }
 
 
 
@@ -382,33 +275,7 @@ public class DialogUI extends javax.swing.JFrame {
     }
 
     private void jBtnRmvCompActionPerformed(java.awt.event.ActionEvent evt) {
-        try{
-            // находим выделенную строку и извлекаем оттуда id
-            int row = jTable1.getSelectedRow();
-            String idSelectedRowTableString = jTable1.getValueAt(row, idxIdTable).toString();
-            int idSelectedRowTableInt = Integer.parseInt(idSelectedRowTableString);
 
-            // работаем с данными
-            NodeComputers foundNode = myNet.findById(idSelectedRowTableInt);
-            foundNode.removeElement();
-
-
-            // обновляем таблицы:
-            jTable1.setModel(new DefaultTableModel(
-                    myNet.getMainInfo(),
-                    labelsJTable1
-            ));
-            jTable1.setRowSelectionInterval(row, row);
-
-            jTable2.setModel(new DefaultTableModel(
-                    foundNode.toStringCircleAtTable(),
-                    labelsJTable2
-            ));
-        }
-        catch(Throwable e){
-            String err = String.valueOf(e);
-            jLabel1.setText(err);
-        }
 
 
 
