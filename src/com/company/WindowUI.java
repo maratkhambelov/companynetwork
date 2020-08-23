@@ -189,6 +189,8 @@ public class WindowUI extends JFrame {
             // работаем с данными: добавляем узел в сеть
             myNet.addElement(new NodeComputers(idInt, queueSize));
 
+            // сериализация
+            toWriteStructure();
 
             // обновляем таблицы
             jTable1.setModel(new DefaultTableModel(
@@ -232,6 +234,9 @@ public class WindowUI extends JFrame {
             NodeComputers foundNode = myNet.findById(idSelectedNode);
             myNet.removeElement(foundNode);
 
+            // сериализация
+            toWriteStructure();
+
             // обновляем таблицу
             if(myNet.isEmpty() != true) {
                 jTable1.setModel(new DefaultTableModel(
@@ -253,6 +258,10 @@ public class WindowUI extends JFrame {
                 jTable1.setModel(new DefaultTableModel(
                         new Object [][] {},
                         labelsJTable1
+                ));
+                jTable2.setModel(new DefaultTableModel(
+                        new Object [][] {},
+                        labelsJTable2
                 ));
             }
         }
@@ -280,6 +289,9 @@ public class WindowUI extends JFrame {
             Computer newComp = new Computer(id, memory);
             selectedNode.addElement(newComp);
 
+            // сериализация
+            toWriteStructure();
+
             // обновляем таблицы:
             // обновляем общее количество в памяти, кол-во компьютеров в первой таблице
             // обновляем таблицу 2
@@ -305,8 +317,6 @@ public class WindowUI extends JFrame {
         catch(Throwable err){
             jLabel1.setText("Компьютер с таким id уже имеется в узле. " +
                     "\nВведите другой id для компьютера");
-//            String error = String.valueOf(err);
-//            jLabel1.setText(error);
         }
     }
     private void jBtnRmvCompActionPerformed(ActionEvent e){
@@ -320,6 +330,9 @@ public class WindowUI extends JFrame {
             // работаем с данными
             NodeComputers foundNode = myNet.findById(idSelectedRowTableInt);
             foundNode.removeElement();
+
+            // сериализация
+            toWriteStructure();
 
 
             // обновляем таблицы:
@@ -363,13 +376,25 @@ public class WindowUI extends JFrame {
             for (int j = model.getColumnCount() - 1; j >= 0; --j) {
 
                 if (model.getValueAt(i, idxCol).equals(value)) {
-                    // what if value is not unique?
                     return i;
                 }
             }
         }
         return -1;
     }
+    public void toWriteStructure() {
+        if(!myNet.isEmpty()){
+            TextUtil util = new TextUtil();
+            String path = "companyStructure.txt";
+            util.toWrite(myNet, path);
+        }
+    }
+    public void toReadStructure() {
+        TextUtil util = new TextUtil();
+        String path = "companyStructure.txt";
+        util.toRead(path);
+    }
+
     private JButton jBtnAddNode;
     private JButton jBtnRmvNode;
     private JButton jBtnAddComp;
@@ -379,8 +404,6 @@ public class WindowUI extends JFrame {
     private JTextField jTxtFieldQueueSize;
     private JTextField jTxtFieldIdComp;
     private JTextField jTxtFieldMemoryComp;
-
-
 
     private JTable jTable1;
     private JTable jTable2;
@@ -395,5 +418,4 @@ public class WindowUI extends JFrame {
     private JLabel jLabelQueueSizeNode;
     private JLabel jLabelTitleComp;
     private JLabel jLabelTitleNode;
-
 }

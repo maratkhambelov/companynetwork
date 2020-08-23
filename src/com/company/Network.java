@@ -178,10 +178,8 @@ public class Network {
     public String[][] getMainInfo(){
         int length = this.getLength();
         int countRows = 3;
-        System.out.println(this.getLength());
         String[][] nodesMainInfo = new String[length][countRows];
         NodeComputers current = tail.getNext();
-        System.out.println(current.getId());
         for (int j = 0; j <= length-1; j++) {
             nodesMainInfo[j][0] = String.valueOf(current.getId());
             nodesMainInfo[j][1] = String.valueOf(current.getAmountComputers());
