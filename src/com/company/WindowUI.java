@@ -20,7 +20,7 @@ public class WindowUI extends JFrame {
             "Инвентарный номер", "Объем памяти"
     };
 
-    public WindowUI(){
+        public WindowUI(){
         initComponents();
     }
     public void initComponents(){
@@ -68,7 +68,8 @@ public class WindowUI extends JFrame {
                 new Object [][] {
                 },
                 labelsJTable1
-        ));
+        )
+        );
         jScrollPane3.setViewportView(jTable1);
         if (jTable1.getColumnModel().getColumnCount() > 0) {
             jTable1.getColumnModel().getColumn(0).setMaxWidth(100);
@@ -76,7 +77,6 @@ public class WindowUI extends JFrame {
 
         jTable2.setModel(new DefaultTableModel(
                 new Object [][] {
-
                 },
                 labelsJTable2
         ));
@@ -196,7 +196,9 @@ public class WindowUI extends JFrame {
             jTable1.setModel(new DefaultTableModel(
                     myNet.getMainInfo(),
                     labelsJTable1
-            ));
+            )
+                             {public boolean isCellEditable(int row, int column) { return false;}}
+            );
 
             // выделяем актуальную строку в jTable1
             int idxNewRowSelected = this.getRowByValueAndCol(jTable1.getModel(), idString, idxIdTable);
@@ -207,7 +209,9 @@ public class WindowUI extends JFrame {
             jTable2.setModel(new DefaultTableModel(
                     foundNode.toStringCircleAtTable(),
                     labelsJTable2
-            ));
+            )
+                             {public boolean isCellEditable(int row, int column) { return false;}}
+            );
             jLabel1.setText("");
 
             // стираем старые значения textfield
@@ -242,7 +246,9 @@ public class WindowUI extends JFrame {
                 jTable1.setModel(new DefaultTableModel(
                         myNet.getMainInfo(),
                         labelsJTable1
-                ));
+                )
+                         {public boolean isCellEditable(int row, int column) { return false;}}
+                );
                 // берем первую строку из таблицы и выводим ее компьютеры
                 if(jTable1.getSelectedRow() == -1){
                     jTable1.setRowSelectionInterval(0, 0);
@@ -251,7 +257,9 @@ public class WindowUI extends JFrame {
                     jTable2.setModel(new DefaultTableModel(
                             foundNewNode.toStringCircleAtTable(),
                             labelsJTable2
-                    ));
+                    )
+                         {public boolean isCellEditable(int row, int column) { return false;}}
+                    );
                 }
             }
             else {
@@ -303,7 +311,9 @@ public class WindowUI extends JFrame {
             jTable2.setModel(new DefaultTableModel(
                     selectedNode.toStringCircleAtTable(),
                     labelsJTable2
-            ));
+            )
+                 {public boolean isCellEditable(int row, int column) { return false;}}
+            );
             jLabel1.setText("");
             // стираем старые значения textfield
             jTxtFieldIdComp.setText("");
@@ -341,13 +351,17 @@ public class WindowUI extends JFrame {
             jTable1.setModel(new DefaultTableModel(
                     myNet.getMainInfo(),
                     labelsJTable1
-            ));
+            )
+                {public boolean isCellEditable(int row, int column) { return false;}}
+            );
             jTable1.setRowSelectionInterval(row, row);
 
             jTable2.setModel(new DefaultTableModel(
                     foundNode.toStringCircleAtTable(),
                     labelsJTable2
-            ));
+            )
+                 {public boolean isCellEditable(int row, int column) { return false;}}
+            );
             jLabel1.setText("");
         }
         catch (ArrayIndexOutOfBoundsException exc){
@@ -370,7 +384,9 @@ public class WindowUI extends JFrame {
         jTable2.setModel(new DefaultTableModel(
                 foundNode.toStringCircleAtTable(),
                 labelsJTable2
-        ));
+        )
+             {public boolean isCellEditable(int row, int column) { return false;}}
+        );
     }
 
 
