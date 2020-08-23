@@ -264,6 +264,8 @@ public class WindowUI extends JFrame {
                         labelsJTable2
                 ));
             }
+            jLabel1.setText("");
+
         }
         catch (NullPointerException exc){
             jLabel1.setText("Список пуст");
@@ -346,6 +348,7 @@ public class WindowUI extends JFrame {
                     foundNode.toStringCircleAtTable(),
                     labelsJTable2
             ));
+            jLabel1.setText("");
         }
         catch (ArrayIndexOutOfBoundsException exc){
             jLabel1.setText("Очередь пуста");

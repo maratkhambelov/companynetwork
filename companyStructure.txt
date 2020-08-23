@@ -1,5 +1,6 @@
  Network: { NodeComputers: {
- Node: {id: 1, amountComputers: 2, queue: [ Computer: {id:'5', memory: 0}, Computer: {id:'51', memory: 1},  ], },
- Node: {id: 5, amountComputers: 0, queue: [  ], },
- Node: {id: 23, amountComputers: 1, queue: [ Computer: {id:'5', memory: 3},  ], },
-amountNodes: 3 }},
+ Node: {id: 1, amountComputers: 1, queue: [ Computer: {id:'33', memory: 3},  ], },
+ Node: {id: 3, amountComputers: 0, queue: [  ], },
+ Node: {id: 7, amountComputers: 0, queue: [  ], },
+ Node: {id: 12, amountComputers: 0, queue: [  ], },
+amountNodes: 4 }},
