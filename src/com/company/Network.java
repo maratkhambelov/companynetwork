@@ -49,7 +49,6 @@ public class Network {
         size++;
         setMemory(memory + node.getMemory());
     }
-
     public void removeElement(NodeComputers node){
         NodeComputers found = findById(node.getId());
         if(node == tail) {
@@ -73,14 +72,32 @@ public class Network {
             throw new Error("item was not found");
         }
     }
+
     public boolean isEmpty(){
         if(size == 0) {
             return true;
         }
         return false;
     }
+    public int getMemory(){
+        return this.memory;
+    }
+    public void setMemory(int newValue){
+        this.memory = newValue;
+    }
+    public Integer getLength(){
+        int amountNodes = 0;
+        NodeComputers current = tail.getNext();
 
-    // поиск элемента
+        current = current.getNext();
+        amountNodes++;
+        while(current !=  tail.getNext()) {
+            current = current.getNext();
+            amountNodes++;
+        }
+        return amountNodes;
+    }
+
     public boolean isFound(NodeComputers node){
         NodeComputers current = tail.getNext();
         boolean isFound = false;
@@ -118,37 +135,19 @@ public class Network {
 
         return null;
     }
-    public int getMemory(){
-        return this.memory;
-    }
-    public void setMemory(int newValue){
-        this.memory = newValue;
-    }
-    public String getStringNodes(){
-            String allElements = " NodeComputers: {" + "\n" ;
-            NodeComputers current = tail.getNext();
-            allElements = allElements + current.toString();
 
-            current = current.getNext();
-            while(current !=  tail.getNext()) {
-                allElements = allElements + current.toString();
-                current = current.getNext();
-            }
-            allElements = allElements + " }" + "\n";
-            return allElements;
+    @Override
+    public String toString() {
+        return "Network: {" +
+                "memory:" + memory + "," +
+                "tailId: " + tail.getId() + ", " +
+                getStringNodes() +
+                '}';
     }
-    public Integer getLength(){
-        int amountNodes = 0;
-        NodeComputers current = tail.getNext();
 
-        current = current.getNext();
-        amountNodes++;
-        while(current !=  tail.getNext()) {
-            current = current.getNext();
-            amountNodes++;
-        }
-        return amountNodes;
-    }
+
+
+    //для вывода в jTable
     public String[][] getMainInfo(){
         int length = this.getLength();
         int countRows = 3;
@@ -162,20 +161,21 @@ public class Network {
         }
         return nodesMainInfo;
     }
+    // для консольного вывода
+    public String getStringNodes(){
+        String allElements = " NodeComputers: {" + "\n" ;
+        NodeComputers current = tail.getNext();
+        allElements = allElements + current.toString();
 
-    @Override
-    public String toString() {
-        return "Network: {" +
-                "memory:" + memory + "," +
-                "tailId: " + tail.getId() + ", " +
-                getStringNodes() +
-                '}';
+        current = current.getNext();
+        while(current !=  tail.getNext()) {
+            allElements = allElements + current.toString();
+            current = current.getNext();
+        }
+        allElements = allElements + " }" + "\n";
+        return allElements;
     }
-//    public String toStringShort(){
-//        return " Network: {" +
-//                getStringNodesShort() +
-//                "}," + "\n" ;
-//    }
+    //для сохранения структуры в файл
     public String toSaveString(){
         String allElements = "Network 1";
         NodeComputers current = tail.getNext();

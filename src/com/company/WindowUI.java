@@ -149,7 +149,7 @@ public class WindowUI extends JFrame {
                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jLabel1)
-                                .addGap(406, 406, 406))
+                                .addGap(260, 260, 300))
         );
         layout.setVerticalGroup(
                 layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -379,18 +379,23 @@ public class WindowUI extends JFrame {
     }
     private void jBtnOpenFileActionPerformed(ActionEvent e){
         try{
+            //создаем filechooser, фильтры
             FileNameExtensionFilter filter = new FileNameExtensionFilter("Txt файл","txt");
-
             JFileChooser fileChooser = new JFileChooser(".");
+            fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+
+            //добавляем фильтры, локализуем
             fileChooser.setFileFilter(filter);
             setUpdateUI(fileChooser);
-            fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
-            int response = fileChooser.showOpenDialog(null);
 
+            //читаем структуру,воссоздаем структуру
+            int response = fileChooser.showOpenDialog(null);
             if(response == JFileChooser.APPROVE_OPTION){
                 String path = fileChooser.getSelectedFile().getAbsolutePath();
                 myNet = getStructureFromFile(path);
             }
+
+            //показываем прочитанную структуру
             jTable1.setModel(new DefaultTableModel(
                     myNet.getMainInfo(),
                     labelsJTable1
@@ -415,11 +420,14 @@ public class WindowUI extends JFrame {
     private void jBtnSaveFileActionPerformed(ActionEvent e){
 
         try{
+            //создаем filechooser, локализуем
             JFileChooser fileChooser = new JFileChooser(".");
             setUpdateUI(fileChooser);
             fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+
             int response = fileChooser.showSaveDialog(null);
 
+            //записываем структуру
             if(response == JFileChooser.APPROVE_OPTION){
                 String path = fileChooser.getSelectedFile().getAbsolutePath();
                 writeStructure(path);
@@ -472,6 +480,18 @@ public class WindowUI extends JFrame {
         Network newNetwork = new Network();
         Network newStructure = util.toRead(file, newNetwork);
         return newStructure;
+//        try{
+//
+//        }
+//        catch (NullPointerException exc){
+//            jLabel1.setText("Не удается сериализовать файл");
+//        }
+//        catch (Throwable err){
+//
+//        }
+//        finally {
+//            return myNet;
+//        }
     }
 
     private JButton jBtnAddNode;
@@ -499,6 +519,8 @@ public class WindowUI extends JFrame {
     private JLabel jLabelQueueSizeNode;
     private JLabel jLabelTitleComp;
     private JLabel jLabelTitleNode;
+
+    // метод локализации
     public static void setUpdateUI(JFileChooser choose) {
         UIManager.put("FileChooser.openButtonText", "Открыть");
         UIManager.put("FileChooser.cancelButtonText", "Отмена");

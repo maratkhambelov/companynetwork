@@ -1,10 +1,7 @@
 package com.company;
 
-import sun.nio.ch.Net;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 public class TextUtil {
@@ -22,20 +19,12 @@ public class TextUtil {
     public Network toRead(File file, Network network) throws FileNotFoundException {
         Scanner scanner = new Scanner(file);
 
-        //TODO: node should to change
-        NodeComputers node = new NodeComputers(0,0);
+        NodeComputers node = null;
         while(scanner.hasNext()){
 
             String[] tokens = scanner.nextLine().split(" ");
-
-            String instance = tokens[0].toString();
-
-            if(instance.equals("Network")){
-                System.out.println("NETWORK: ");
-                continue;
-            }
-            else if(instance.equals("Node")){
-                System.out.println("NODE: ");
+            String instance = tokens[0];
+            if(instance.equals("Node")){
                 int id = Integer.parseInt(tokens[1]);
                 int size = Integer.parseInt(tokens[2]);
                 int first = Integer.parseInt(tokens[3]);
@@ -50,21 +39,16 @@ public class TextUtil {
                 network.addElement(node);
             }
             else if(instance.equals("Computer")) {
-                System.out.println("COMPUTER: ");
                 int id = Integer.parseInt(tokens[1]);
                 int memory = Integer.parseInt(tokens[2]);
                 int idx = Integer.parseInt(tokens[3]);
                 Computer computer = new Computer(id, memory);
-                //TODO: node might not be created before, but unlikely
                 node.setDirectlyComp(idx, computer);
             }
-            else if(instance.equals("null")){
-                System.out.println("NULL: ");
+            else{
                 continue;
             }
         }
-
-        System.out.println(network.getStringNodes());
         return network;
     }
 

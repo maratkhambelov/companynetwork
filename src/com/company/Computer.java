@@ -5,7 +5,6 @@ public class Computer {
     private int id;
     private int memory;
 
-
     Computer(int id, int memory) {
         this.id = id;
         this.memory = memory;
@@ -24,6 +23,7 @@ public class Computer {
                 "memory: " + memory +
                 '}';
     }
+
     public String toSaveString() {
         return "Computer " + id + " " + memory;
     }
