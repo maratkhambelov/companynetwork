@@ -31,7 +31,13 @@ public class NodeComputers{
     public void setPrev(NodeComputers prev){
         this.prev = prev;
     }
-
+    public void setFirstLast(int first, int last) {
+        this.first = first;
+        this.last = last;
+    }
+    public void setDirectlyComp(int idx, Computer computer) {
+        this.queueComputers[idx] = computer;
+    }
     public void addElement(Computer computer) {
         if(isFull()) {
             throw new ArrayIndexOutOfBoundsException("queue is full");
@@ -120,13 +126,15 @@ public class NodeComputers{
             }
         }
         return false;
-
     }
     public int getMemory() {
         return this.memory;
     }
     public void setMemory(int newValue){
         this.memory = newValue;
+    }
+    public void setAmountComputers(int newAmount){
+        this.amount = newAmount;
     }
     public int getAmountComputers(){
         return this.amount;
@@ -147,19 +155,19 @@ public class NodeComputers{
                 "size: " + queueComputers.length + ", " +
                 "}," + "\n" ;
     }
-    public String toStringShort(){
-        return " Node: {" +
-                "id: " + id + ", "+
-                "amountComputers: " + amount  + ", " +
-                "queue: " + toStringCircle() + ", " +
-                "}," + "\n" ;
-    }
+//    public String toStringShort(){
+//        return " Node: {" +
+//                "id: " + id + ", "+
+//                "amountComputers: " + amount  + ", " +
+//                "queue: " + toStringCircle() + ", " +
+//                "}," + "\n" ;
+//    }
     public String[][] toStringCircleAtTable(){
         int length = this.queueComputers.length;
         int countRows = 2;
         String[][] computersMainInfo = new String[length][countRows];
         if(last == 0) {
-            System.out.println("LAST == 0");
+//            System.out.println("LAST == 0");
 
             int j = 0;
             for(int i = first; i <= queueComputers.length-1 ; i++){
@@ -188,22 +196,22 @@ public class NodeComputers{
         else if(first == last){
             int j = 0;
             for(int i = first; i <= queueComputers.length-1; i++){
-                System.out.println("FROM FIRST TO END ARR: ");
-                System.out.println(String.valueOf(this.queueComputers[i].getId()));
+//                System.out.println("FROM FIRST TO END ARR: ");
+//                System.out.println(String.valueOf(this.queueComputers[i].getId()));
                 computersMainInfo[j][0] = String.valueOf(this.queueComputers[i].getId());
                 computersMainInfo[j][1] = String.valueOf(this.queueComputers[i].getMemory());
                 j++;
             }
             for(int t = 0; t < last; t++){
-                System.out.println("FROM START ARR TO LAST: ");
-                System.out.println(String.valueOf(this.queueComputers[t].getId()));
+//                System.out.println("FROM START ARR TO LAST: ");
+//                System.out.println(String.valueOf(this.queueComputers[t].getId()));
                 computersMainInfo[j][0] = String.valueOf(this.queueComputers[t].getId());
                 computersMainInfo[j][1] = String.valueOf(this.queueComputers[t].getMemory());
                 j++;
             }
         }
         else if(first < last ) {
-            System.out.println("FIRST < LAST");
+//            System.out.println("FIRST < LAST");
 
             int j = 0;
             for(int i = first; i <= last ; i++){
@@ -215,10 +223,10 @@ public class NodeComputers{
             }
         }
         else if(first > last){
-            System.out.println("FIRST > LAST");
+//            System.out.println("FIRST > LAST");
             int j = 0;
-            System.out.println("FIRST: " + this.first);
-            System.out.println("LAST: " +  this.last);
+//            System.out.println("FIRST: " + this.first);
+//            System.out.println("LAST: " +  this.last);
 //            for(int i = first; i >= last-1 ; i--){
 //                if (queueComputers[i] != null) {
 //                    computersMainInfo[j][0] = String.valueOf(this.queueComputers[i].getId());
@@ -228,15 +236,15 @@ public class NodeComputers{
 //            }
             //TODO: same alghoritm as in first == last -> merge
             for(int i = first; i <= queueComputers.length-1; i++){
-                System.out.println("FROM FIRST TO END ARR: ");
-                System.out.println(String.valueOf(this.queueComputers[i].getId()));
+//                System.out.println("FROM FIRST TO END ARR: ");
+//                System.out.println(String.valueOf(this.queueComputers[i].getId()));
                 computersMainInfo[j][0] = String.valueOf(this.queueComputers[i].getId());
                 computersMainInfo[j][1] = String.valueOf(this.queueComputers[i].getMemory());
                 j++;
             }
             for(int t = 0; t < last; t++){
-                System.out.println("FROM START ARR TO LAST: ");
-                System.out.println(String.valueOf(this.queueComputers[t].getId()));
+//                System.out.println("FROM START ARR TO LAST: ");
+//                System.out.println(String.valueOf(this.queueComputers[t].getId()));
                 computersMainInfo[j][0] = String.valueOf(this.queueComputers[t].getId());
                 computersMainInfo[j][1] = String.valueOf(this.queueComputers[t].getMemory());
                 j++;
@@ -244,5 +252,20 @@ public class NodeComputers{
         }
 
         return computersMainInfo;
+    }
+    public String toSaveString(){
+        return "\nNode "  + this.id + " " +  this.queueComputers.length + " " +  this.first + " " +  this.last  + " " + this.amount + " " + this.memory + this.toSaveStringComps();
+    }
+    public String toSaveStringComps(){
+        String result = "";
+        for(int i = 0; i <= this.queueComputers.length-1 ; i++){
+            if(this.queueComputers[i] != null) {
+                result += "\n" + this.queueComputers[i].toSaveString() + " " + i;
+            }
+            else{
+                result += "\n" + "null";
+            }
+        }
+        return result;
     }
 }

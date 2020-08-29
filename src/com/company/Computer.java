@@ -24,5 +24,8 @@ public class Computer {
                 "memory: " + memory +
                 '}';
     }
+    public String toSaveString() {
+        return "Computer " + id + " " + memory;
+    }
 
 }

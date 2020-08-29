@@ -157,6 +157,6 @@ public class Dialog {
     public void toReadStructure() {
         TextUtil util = new TextUtil();
         String path = "companyStructure.txt";
-        util.toRead(path);
+//        util.toRead(path, myNet);
     }
 }

@@ -124,7 +124,7 @@ public class Network {
     public void setMemory(int newValue){
         this.memory = newValue;
     }
-    private String getStringNodes(){
+    public String getStringNodes(){
             String allElements = " NodeComputers: {" + "\n" ;
             NodeComputers current = tail.getNext();
             allElements = allElements + current.toString();
@@ -137,22 +137,6 @@ public class Network {
             allElements = allElements + " }" + "\n";
             return allElements;
     }
-    public String getStringNodesShort(){
-        int amountNodes = 0;
-        String allElements = " NodeComputers: {" + "\n" ;
-        NodeComputers current = tail.getNext();
-        allElements = allElements + current.toStringShort();
-
-        current = current.getNext();
-        amountNodes++;
-        while(current !=  tail.getNext()) {
-            allElements = allElements + current.toStringShort();
-            current = current.getNext();
-            amountNodes++;
-        }
-        allElements = allElements  + "amountNodes: " + amountNodes + " }";
-        return allElements;
-    }
     public Integer getLength(){
         int amountNodes = 0;
         NodeComputers current = tail.getNext();
@@ -164,16 +148,6 @@ public class Network {
             amountNodes++;
         }
         return amountNodes;
-    }
-    public NodeComputers[] getNodes(){
-        int length = this.getLength();
-        NodeComputers current = tail.getNext();
-        NodeComputers[] nodes = new NodeComputers[length];
-        for (int j = 0; j <= length-1; j++) {
-            nodes[j] = current;
-            current = current.getNext();
-        }
-        return nodes;
     }
     public String[][] getMainInfo(){
         int length = this.getLength();
@@ -197,9 +171,21 @@ public class Network {
                 getStringNodes() +
                 '}';
     }
-    public String toStringShort(){
-        return " Network: {" +
-                getStringNodesShort() +
-                "}," + "\n" ;
+//    public String toStringShort(){
+//        return " Network: {" +
+//                getStringNodesShort() +
+//                "}," + "\n" ;
+//    }
+    public String toSaveString(){
+        String allElements = "Network 1";
+        NodeComputers current = tail.getNext();
+        allElements = allElements + current.toSaveString();
+
+        current = current.getNext();
+        while(current !=  tail.getNext()) {
+            allElements = allElements + current.toSaveString();
+            current = current.getNext();
+        }
+        return allElements;
     }
 }
