@@ -4,11 +4,11 @@ import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
-import java.awt.event.ActionEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.awt.event.*;
 import java.io.File;
-import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.Scanner;
 
 
 public class WindowUI extends JFrame {
@@ -16,6 +16,7 @@ public class WindowUI extends JFrame {
     int idxIdTable = 0;
     int idxAmountComputers = 1;
     int idxMemoryJTable1 = 2;
+    int LIMIT_TEXTFIELD = 5000;
     String[] labelsJTable1 = new String [] {
         "Id:", "Кол-во компьютеров:", "Объем памяти"
     };
@@ -70,10 +71,32 @@ public class WindowUI extends JFrame {
         jBtnRmvComp.addActionListener(e -> jBtnRmvCompActionPerformed(e));
         jBtnOpenFile.addActionListener(e -> jBtnOpenFileActionPerformed(e));
         jBtnSaveFile.addActionListener(e -> jBtnSaveFileActionPerformed(e));
+        jBtnSaveFile.setEnabled(false);
+
 
         jTable1.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent evt) {
                 jTable1MouseClicked(evt);
+            }
+        });
+        jTable1.addKeyListener(new KeyListener() {
+
+            @Override
+            public void keyTyped(KeyEvent e) {
+
+            }
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+
+
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+                if ((e.getKeyCode() == 38)||(e.getKeyCode() == 40) || (e.getKeyChar() == KeyEvent.VK_TAB)) {
+                    jTableKeyPressed(e);
+                }
             }
         });
         jTable1.setModel(new DefaultTableModel(
@@ -199,6 +222,10 @@ public class WindowUI extends JFrame {
             String idString = jTxtFieldIdNode.getText();
             int idInt = Integer.parseInt(idString);
             int queueSize = Integer.parseInt(jTxtFieldQueueSize.getText());
+            // проверка на допустимые значения
+            if((idInt < 0 || idInt >= LIMIT_TEXTFIELD)|| (queueSize < 0 || queueSize >= LIMIT_TEXTFIELD)){
+                throw new IOException();
+            }
 
             // работаем с данными: добавляем узел в сеть
             myNet.addElement(new NodeComputers(idInt, queueSize));
@@ -229,7 +256,14 @@ public class WindowUI extends JFrame {
             // стираем старые значения textfield
             jTxtFieldIdNode.setText("");
             jTxtFieldQueueSize.setText("");
-        } catch(NumberFormatException exc){
+            jBtnSaveFile.setEnabled(true);
+
+        }
+        catch (IOException exc){
+            jLabel1.setText("Вы ввели значение в недопустимых пределах. " +
+                        "\nВведите только цифры значения от 0 до " + LIMIT_TEXTFIELD);
+        }
+        catch(NumberFormatException exc){
             jLabel1.setText("Вы ввели неверное значение. " +
                             "\nВведите только цифры");
         } catch(Throwable err){
@@ -284,6 +318,9 @@ public class WindowUI extends JFrame {
             }
             jLabel1.setText("");
 
+            if(myNet.isEmpty()) {
+                jBtnSaveFile.setEnabled(false);
+            }
         }
         catch (NullPointerException exc){
             jLabel1.setText("Список пуст");
@@ -298,7 +335,9 @@ public class WindowUI extends JFrame {
             // извлекаем значения из textfield
             int id = Integer.parseInt(jTxtFieldIdComp.getText());
             int memory = Integer.parseInt(jTxtFieldMemoryComp.getText());
-
+            if((id < 0 || id >= LIMIT_TEXTFIELD)|| (memory < 0 || memory >= LIMIT_TEXTFIELD)){
+                throw new IOException();
+            }
             // находим выделенную строку и извлекаем оттуда id
             int row = jTable1.getSelectedRow();
             String idSelectedRowTableString = jTable1.getValueAt(row, 0).toString();
@@ -327,6 +366,10 @@ public class WindowUI extends JFrame {
             jTxtFieldIdComp.setText("");
             jTxtFieldMemoryComp.setText("");
         }
+        catch (IOException exc){
+            jLabel1.setText("Вы ввели неверное значение. " +
+                    "\nВведите только цифры значения от 0 до " + LIMIT_TEXTFIELD);
+        }
         catch (ArrayIndexOutOfBoundsException exc){
             jLabel1.setText("Очередь заполнена.");
         }
@@ -336,7 +379,7 @@ public class WindowUI extends JFrame {
         }
         catch(Throwable err){
             jLabel1.setText("Компьютер с таким id уже имеется в узле. " +
-                    "\nВведите другой id для компьютера");
+                    "\nВведите другой id для компьютера" );
         }
     }
     private void jBtnRmvCompActionPerformed(ActionEvent e){
@@ -383,6 +426,7 @@ public class WindowUI extends JFrame {
             FileNameExtensionFilter filter = new FileNameExtensionFilter("Txt файл","txt");
             JFileChooser fileChooser = new JFileChooser(".");
             fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+            fileChooser.setDialogTitle("Открыть");
 
             //добавляем фильтры, локализуем
             fileChooser.setFileFilter(filter);
@@ -411,31 +455,46 @@ public class WindowUI extends JFrame {
                              )
                              {public boolean isCellEditable(int row, int column) { return false;}}
             );
+            jLabel1.setText("");
+            if(!myNet.isEmpty()) {
+                jBtnSaveFile.setEnabled(true);
+            }
+        }
+        catch(NullPointerException exc){
+            jLabel1.setText("Не удалось сериализовать");
         }
         catch(Throwable err){
             String error = String.valueOf(err);
-            jLabel1.setText(error);
+            jLabel1.setText("Не удалось сериализовать" + error);
         }
     }
     private void jBtnSaveFileActionPerformed(ActionEvent e){
 
         try{
-            //создаем filechooser, локализуем
+            //создаем filechooser, фильтры
+            FileNameExtensionFilter filter = new FileNameExtensionFilter("Txt файл","txt");
             JFileChooser fileChooser = new JFileChooser(".");
+            fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+            fileChooser.setDialogTitle("Сохранить");
+
+            //подключаем фильтры, локализуем
+            fileChooser.addChoosableFileFilter(filter);
             setUpdateUI(fileChooser);
-            fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 
             int response = fileChooser.showSaveDialog(null);
 
             //записываем структуру
             if(response == JFileChooser.APPROVE_OPTION){
-                String path = fileChooser.getSelectedFile().getAbsolutePath();
+                File file = fileChooser.getSelectedFile();
+                String path = file.getAbsolutePath();
+                path += ".txt";
                 writeStructure(path);
             }
+            jLabel1.setText("");
         }
         catch(Throwable err){
             String error = String.valueOf(err);
-            jLabel1.setText(error);
+            jLabel1.setText("Не удалось сохранить" + error);
         }
     }
 
@@ -454,6 +513,21 @@ public class WindowUI extends JFrame {
              {public boolean isCellEditable(int row, int column) { return false;}}
         );
     }
+    private void jTableKeyPressed(KeyEvent evt) {
+        // определяем выделенную строку
+        int row = jTable1.getSelectedRow();
+        // находим нужный узел для того чтобы показать компьютеры в нем
+        Object idClickedRowObject = jTable1.getValueAt(row, idxIdTable);
+        int idClickedRowInt = Integer.parseInt(idClickedRowObject.toString());
+        NodeComputers foundNode = myNet.findById(idClickedRowInt);
+        // обновляем таблицу 2
+        jTable2.setModel(new DefaultTableModel(
+                                 foundNode.toStringCircleAtTable(),
+                                 labelsJTable2
+                         )
+                         {public boolean isCellEditable(int row, int column) { return false;}}
+        );
+    }
 
 
     public int getRowByValueAndCol(TableModel model, Object value, int idxCol) {
@@ -467,31 +541,60 @@ public class WindowUI extends JFrame {
         }
         return -1;
     }
+
     public void writeStructure(String path) {
         if(!myNet.isEmpty()){
-            TextUtil util = new TextUtil();
-            path += "/companyStructure.txt";
-            util.toWrite(myNet, path);
+            try(FileWriter writer = new FileWriter(path, false)) {
+                String text = myNet.toSaveString();
+                writer.write(text);
+                writer.flush();
+            }
+            catch(IOException ex){
+                System.out.println(ex.getMessage());
+            }
         }
+
     }
-    public Network getStructureFromFile(String path) throws FileNotFoundException {
-        TextUtil util = new TextUtil();
+    public Network getStructureFromFile(String path) throws IOException {
+
         File file = new File(path);
         Network newNetwork = new Network();
-        Network newStructure = util.toRead(file, newNetwork);
-        return newStructure;
-//        try{
-//
-//        }
-//        catch (NullPointerException exc){
-//            jLabel1.setText("Не удается сериализовать файл");
-//        }
-//        catch (Throwable err){
-//
-//        }
-//        finally {
-//            return myNet;
-//        }
+
+        Scanner scanner = new Scanner(file);
+
+        NodeComputers node = null;
+        while(scanner.hasNext()){
+
+            String[] tokens = scanner.nextLine().split(" ");
+            String instance = tokens[0];
+            if(instance.equals("Node")){
+                int id = Integer.parseInt(tokens[1]);
+                int size = Integer.parseInt(tokens[2]);
+                int first = Integer.parseInt(tokens[3]);
+                int last = Integer.parseInt(tokens[4]);
+                int amountComps = Integer.parseInt(tokens[5]);
+                int memory = Integer.parseInt(tokens[6]);
+
+                node = new NodeComputers(id, size);
+                node.setFirstLast(first, last);
+                node.setAmountComputers(amountComps);
+                node.setMemory(memory);
+                newNetwork.addElement(node);
+            }
+            else if(instance.equals("Computer")) {
+                int id = Integer.parseInt(tokens[1]);
+                int memory = Integer.parseInt(tokens[2]);
+                int idx = Integer.parseInt(tokens[3]);
+                Computer computer = new Computer(id, memory);
+                node.setDirectlyComp(idx, computer);
+            }
+            else{
+                continue;
+            }
+
+        }
+        return newNetwork;
+
     }
 
     private JButton jBtnAddNode;

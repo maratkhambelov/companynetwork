@@ -57,7 +57,6 @@ public class Network {
         if(found != null && node.getNext() == node ){
             this.tail = null;
             size--;
-//            throw new NullPointerException("all nodes removed");
         }
         else if(isFound(node)){
             node.getPrev().setNext(node.getNext());

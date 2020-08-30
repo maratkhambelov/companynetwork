@@ -184,7 +184,7 @@ public class NodeComputers{
             }
         }
 
-        else if(first == last){
+        else if((first == last) || (first > last)){
             int j = 0;
             for(int i = first; i <= queueComputers.length-1; i++){
                 if (queueComputers[i] == null) {
@@ -214,26 +214,7 @@ public class NodeComputers{
                 j++;
             }
         }
-        else if(first > last){
-            int j = 0;
-            //TODO: same alghoritm as in first == last -> merge
-            for(int i = first; i <= queueComputers.length-1; i++){
-                if (queueComputers[i] == null) {
-                    continue;
-                }
-                computersMainInfo[j][0] = String.valueOf(this.queueComputers[i].getId());
-                computersMainInfo[j][1] = String.valueOf(this.queueComputers[i].getMemory());
-                j++;
-            }
-            for(int t = 0; t < last; t++){
-                if (queueComputers[t] == null) {
-                    continue;
-                }
-                computersMainInfo[j][0] = String.valueOf(this.queueComputers[t].getId());
-                computersMainInfo[j][1] = String.valueOf(this.queueComputers[t].getMemory());
-                j++;
-            }
-        }
+
 
         return computersMainInfo;
     }
@@ -266,94 +247,3 @@ public class NodeComputers{
 
 
 
-//    public String[][] toStringCircleAtTable(){
-//        int length = this.queueComputers.length;
-//        int countRows = 2;
-//        String[][] computersMainInfo = new String[length][countRows];
-//        if(last == 0) {
-////            System.out.println("LAST == 0");
-//
-//            int j = 0;
-//            for(int i = first; i <= queueComputers.length-1 ; i++){
-//                if (queueComputers[i] != null) {
-//                    computersMainInfo[j][0] = String.valueOf(this.queueComputers[i].getId());
-//                    computersMainInfo[j][1] = String.valueOf(this.queueComputers[i].getMemory());
-//                }
-//                j++;
-//            }
-//        }
-////        else if(first == queueComputers.length-1 && last == queueComputers.length-1) {
-////            int j = 0;
-////            if(queueComputers[first] != null && queueComputers[last] != null) {
-////                computersMainInfo[j][0] = String.valueOf(this.queueComputers[first].getId());
-////                computersMainInfo[j][1] = String.valueOf(this.queueComputers[first].getMemory());
-////                j++;
-////            }
-////            for(int i = 0; i <= last-1 ; i++){
-////                if (queueComputers[i] != null) {
-////                    computersMainInfo[j][0] = String.valueOf(this.queueComputers[i].getId());
-////                    computersMainInfo[j][1] = String.valueOf(this.queueComputers[i].getMemory());
-////                }
-////                j++;
-////            }
-////        }
-//        else if(first == last){
-//            int j = 0;
-//            for(int i = first; i <= queueComputers.length-1; i++){
-////                System.out.println("FROM FIRST TO END ARR: ");
-////                System.out.println(String.valueOf(this.queueComputers[i].getId()));
-//                computersMainInfo[j][0] = String.valueOf(this.queueComputers[i].getId());
-//                computersMainInfo[j][1] = String.valueOf(this.queueComputers[i].getMemory());
-//                j++;
-//            }
-//            for(int t = 0; t < last; t++){
-////                System.out.println("FROM START ARR TO LAST: ");
-////                System.out.println(String.valueOf(this.queueComputers[t].getId()));
-//                computersMainInfo[j][0] = String.valueOf(this.queueComputers[t].getId());
-//                computersMainInfo[j][1] = String.valueOf(this.queueComputers[t].getMemory());
-//                j++;
-//            }
-//        }
-//        else if(first < last ) {
-////            System.out.println("FIRST < LAST");
-//
-//            int j = 0;
-//            for(int i = first; i <= last ; i++){
-//                if (queueComputers[i] != null) {
-//                    computersMainInfo[j][0] = String.valueOf(this.queueComputers[i].getId());
-//                    computersMainInfo[j][1] = String.valueOf(this.queueComputers[i].getMemory());
-//                }
-//                j++;
-//            }
-//        }
-//        else if(first > last){
-////            System.out.println("FIRST > LAST");
-//            int j = 0;
-////            System.out.println("FIRST: " + this.first);
-////            System.out.println("LAST: " +  this.last);
-////            for(int i = first; i >= last-1 ; i--){
-////                if (queueComputers[i] != null) {
-////                    computersMainInfo[j][0] = String.valueOf(this.queueComputers[i].getId());
-////                    computersMainInfo[j][1] = String.valueOf(this.queueComputers[i].getMemory());
-////                }
-////                j++;
-////            }
-//            //TODO: same alghoritm as in first == last -> merge
-//            for(int i = first; i <= queueComputers.length-1; i++){
-////                System.out.println("FROM FIRST TO END ARR: ");
-////                System.out.println(String.valueOf(this.queueComputers[i].getId()));
-//                computersMainInfo[j][0] = String.valueOf(this.queueComputers[i].getId());
-//                computersMainInfo[j][1] = String.valueOf(this.queueComputers[i].getMemory());
-//                j++;
-//            }
-//            for(int t = 0; t < last; t++){
-////                System.out.println("FROM START ARR TO LAST: ");
-////                System.out.println(String.valueOf(this.queueComputers[t].getId()));
-//                computersMainInfo[j][0] = String.valueOf(this.queueComputers[t].getId());
-//                computersMainInfo[j][1] = String.valueOf(this.queueComputers[t].getMemory());
-//                j++;
-//            }
-//        }
-//
-//        return computersMainInfo;
-//    }
